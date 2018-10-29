@@ -1,6 +1,6 @@
 # Tugas-Besar-IF2110
-Tubes IF2110 - Algoritma dan Struktur Data
-Semester 3 2018/2019
+Tubes <strong>IF2110</strong> - Algoritma dan Struktur Data</br>
+Semester 3 2018/2019</br>
 
 Credits:
 
