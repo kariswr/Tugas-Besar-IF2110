@@ -83,15 +83,13 @@ typedef struct {
 
 
 /*---------- MATRIKS PETA ----------*/
-#define N 8
-#define M 8
 
 typedef char simbol[2];
 
 typedef struct { 
-	simbol T[N+1][M+1]; // peta berupa matriks simbol; lihat legenda di bawah
-    int NBrsEff = N;    // ukuran vertikal peta
-	int NKolEff = M;    // ukuran horizontal peta
+    simbol T[9][9];     // peta berupa matriks simbol; lihat legenda di bawah
+    int NBrsEff = 8;    // ukuran vertikal peta
+    int NKolEff = 8;    // ukuran horizontal peta
 } MatriksPeta;
 
 // LEGENDA
@@ -106,38 +104,26 @@ typedef struct {
 
 // N.B. Simbol berupa array of char karena indeks Table harus dua digit.
 
-/*---------- STACK HAND ----------*/
-#define MaxHand 5
-
-typedef char IngredientKey;     // karakter kunci bahan; a sampai o
-
-typedef struct { 
-	IngredientKey T[MaxHand+1]; // stack Ingredient(Key) yang ada pada Hand; indeks 1 sampai MaxHand
-	int TOP;                    // indeks TOP stack
-} StackHand;
-
-
-/*---------- STACK TRAY ----------*/
-#define MaxTray 5
-
-typedef char DishKey;       // karakter kunci makanan; p sampai w
+/*---------- STACK HAND DAN TRAY ----------*/
+#define MaxStack 5
 
 typedef struct {
-	DishKey T[MaxTray+1];   // stack Dish(Key) yang ada pada Tray; indeks 1 sampai MaxTray
+	char T[MaxStack+1];     // stack makanan/bahan; indeks 1 sampai MaxStack
 	int TOP;                // indeks TOP stack
-} StackTray;
+} Stack;
+
+// a sampai o = bahan
+// p sampai w = makanan
 
 /*-----------FOOD TREE-------------*/
-typedef char FoodKey;		// karakter kunci bahan atau makanan jadi; a sampai w 
-
-typedef struct tNode *address;
+typedef struct tNode *addressNode;
 typedef struct tNode {
-	FoodKey info;		//nilai elemen node
-	address left;		//address cabang kiri
-	address right;		//address cabang kanan
+	char Info;		// nilai elemen node (kunci karakter makanan, p sampai w)
+	addressNode left;	// address cabang kiri
+	addressNode right;	// address cabang kanan
 } Node;
 
-typedef address FoodTree;
+typedef addressNode FoodTree;
 
 /*---------- ARRAY ORDER ----------*/
 #define MaxOrder 8
@@ -170,7 +156,7 @@ typedef struct {
     int HEAD;               // indeks HEAD queue
     int TAIL;               // indeks TAIL queue
     int MaxEl = MaxQueue;   // jumlah Customer pada queue
-} QueueCustomer;
+} Queue;
 
 
 /*---------- PLAYER ----------*/
