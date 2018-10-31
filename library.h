@@ -69,6 +69,8 @@ typedef struct {
 
 
 /*---------- ARRAY TABLE ----------*/
+#define NTable 12
+
 typedef struct {
     int Capacity;       // kapasitas Table; bisa 2 atau 4
     int Room;           // Room letak Table; 1 sampai 3
@@ -77,19 +79,21 @@ typedef struct {
 } Table;
 
 typedef struct { 
-	Table T[13];    // array Table dari semua Room; indeks 1 sampai MaxTable
-	int Neff = 12;  // jumlah Table
+	Table T[NTable+1];  // array Table dari semua Room; indeks 1 sampai NTable
+	int Neff;           // jumlah Table = NTable (konstan)
 } ArrTable;
 
 
 /*---------- MATRIKS PETA ----------*/
+#define M 8
+#define N 8
 
 typedef char simbol[2];
 
 typedef struct { 
-    simbol T[9][9];     // peta berupa matriks simbol; lihat legenda di bawah
-    int NBrsEff = 8;    // ukuran vertikal peta
-    int NKolEff = 8;    // ukuran horizontal peta
+    simbol T[M+1][N+1]; // peta berupa matriks simbol; lihat legenda di bawah
+    int NBrsEff;        // ukuran vertikal peta = M (konstan)
+    int NKolEff;        // ukuran horizontal peta = N (konstan)
 } MatriksPeta;
 
 // LEGENDA
@@ -118,7 +122,7 @@ typedef struct {
 /*-----------FOOD TREE-------------*/
 typedef struct tNode *addressNode;
 typedef struct tNode {
-	char Info;		// nilai elemen node (kunci karakter makanan, p sampai w)
+	char Info;		    // nilai elemen node (kunci karakter makanan, p sampai w)
 	addressNode left;	// address cabang kiri
 	addressNode right;	// address cabang kanan
 } Node;
@@ -152,10 +156,10 @@ typedef struct {
 } Customer;
 
 typedef struct {
-    Customer * T;           // queue Customer; indeks 1 sampai MaxQueue
-    int HEAD;               // indeks HEAD queue
-    int TAIL;               // indeks TAIL queue
-    int MaxEl = MaxQueue;   // jumlah Customer pada queue
+    Customer * T;   // queue Customer; indeks 1 sampai MaxQueue
+    int HEAD;       // indeks HEAD queue
+    int TAIL;       // indeks TAIL queue
+    int MaxEl;      // jumlah Customer pada queue = MaxQueue
 } Queue;
 
 
