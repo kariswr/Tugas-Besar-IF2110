@@ -137,8 +137,8 @@ typedef struct tNode {
 	** left		: cabang kiri
 	** right	: cabang kanan */
 	char Info;
-	address left;
-	address right;
+	addressNode left;
+	addressNode right;
 } Node;
 
 typedef addressNode FoodTree;
@@ -185,7 +185,7 @@ typedef struct {
 	Customer *T;
 	int HEAD;
 	int TAIL;
-	int NBQueue;
+	int MaxEl;
 } Queue;
 
 
