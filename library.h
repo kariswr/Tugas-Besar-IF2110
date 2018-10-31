@@ -1,5 +1,3 @@
-#include "boolean.h"
-
 #ifndef _LIBRARY_H
 #define _LIBRARY_H
 
@@ -61,6 +59,11 @@ GRAPH?
 
 */
 
+/*---------- BOOLEAN ----------*/
+#define boolean unsigned char
+#define true 1
+#define false 0
+
 /*---------- POINT ----------*/
 typedef struct {
 	int X;
@@ -80,21 +83,26 @@ typedef struct {
 	boolean Occupied;
 } Table;
 
+#define NTable 12
+
 typedef struct {
 	/* termasuk semua Room; indeks 1 sampai 12*/
-	Table T[13];
-	int Neff = 12;
+	Table T[NTable+1];
+	int Neff;
 } ArrTable;
 
 
 /*---------- MATRIKS PETA ----------*/
 typedef char symbol[2];
 
+#define M 8
+#define N 8
+
 typedef struct {
 	/* Akses array 1..8 */
-	symbol T[9][9];
-	int NBrsEff = 8;
-	int NKolEff = 8;
+	symbol T[M+1][N+1];
+	int NBrsEff;
+	int NKolEff;
 } MapMatrix;
 
 /*LEGENDA
@@ -224,41 +232,5 @@ typedef struct {
 #define Info(Address)	(Address)->info
 #define Next(Address)	(Address)->next
 #define First(List)		(List).First
-
-/******** PRIMITIF POINT ********/
-Point Point_Create (int x, int y);
-/** P1 == P2 (?) **/
-boolean Point_Equal (Point P1, Point P2);
-
-/** Menggeser Posisi **/
-void Point_Translate (Point *P, int dx, int dy);
-
-/******** PRIMITIF ARRAY TABLE ********/
-/** Meja menjadi KOSONG, tanpa CUSTOMER **/
-void Table_Reset (Table *T);
-
-/** Membuat susunan Meja, kapasitas, dan posisi **/
-void Tables_Create (ArrTable *ArrT);
-
-/** TABLE sudah diduduki? **/
-boolean Table_Occupied (Table *T);
-
-/******** PRIMITIF PETA ********/
-/** Menciptakan PETA dari START GAME **/
-void Map_CreateSub (MapMatrix *MM);
-
-/**** Termasuk UI ****/
-/** Menampilkan Peta Kecil SATU RUANG **/
-void Map_Show (MapMatrix MM);
-/** Meng-update Peta Kecil elemen di dalam ruangan
-*** berubah **/
-void Map_Update (MapMatrix MM);
-
-/******** PRIMITIF STACK HAND ********/
-void Stack_CreateEmpty (Stack *St);
-boolean Stack_IsEmpty (Stack St);
-boolean Stack_IsFull (Stack St);
-void Stack_Push (Stack *St, char Key);
-void Stack_Pop (Stack *St, char *Key);
 
 #endif
