@@ -1,11 +1,13 @@
+#include "boolean.h"
+
 #ifndef _LIBRARY_H
 #define _LIBRARY_H
 
 /*
 ---------- DAFTAR ADT YANG DAPAT DIGUNAKAN ----------
 typedef struct {
-    int X;
-    int Y;
+	int X;
+	int Y;
 } Point;
 
 typedef struct { 
@@ -15,15 +17,15 @@ typedef struct {
 
 typedef struct { 
 	infotype T[100][100];
-    int NBrsEff;
+	int NBrsEff;
 	int NKolEff;
 } MatriksInfotype;
 
 typedef struct {
-    infotype * T;
-    int HEAD;
-    int TAIL;
-    int MaxEl;
+	infotype * T;
+	int HEAD;
+	int TAIL;
+	int MaxEl;
 } QueueInfotype;
 
 typedef struct { 
@@ -32,10 +34,12 @@ typedef struct {
 } StackInfotype;
 
 typedef struct tElmtlist *address;
+
 typedef struct tElmtlist { 
 	infotype info;
 	address next;
 } ElmtListInfotype;
+
 typedef struct {
 	address First;
 } ListInfotype;
@@ -57,74 +61,76 @@ GRAPH?
 
 */
 
-#define boolean unsigned char
-#define true 1
-#define false 0
-
 /*---------- POINT ----------*/
 typedef struct {
-    int X;
-    int Y;
+	int X;
+	int Y;
 } Point;
 
 
 /*---------- ARRAY TABLE ----------*/
-#define NTable 12
-
 typedef struct {
-    int Capacity;       // kapasitas Table; bisa 2 atau 4
-    int Room;           // Room letak Table; 1 sampai 3
-    Point Position;     // posisi Table pada MatriksPeta Room
-    boolean Occupied;   // Table terisi
+	/* Capacity 	: maksimum orang tiap meja, 2 atau 4
+	** Room 		: nomor ruang
+	** Position 	: koordinat meja
+	** Occupied 	: apakah sudah diduduki */
+	int Capacity;
+	int Room;
+	Point Position;
+	boolean Occupied;
 } Table;
 
-typedef struct { 
-	Table T[NTable+1];  // array Table dari semua Room; indeks 1 sampai NTable
-	int Neff;           // jumlah Table = NTable (konstan)
+typedef struct {
+	/* termasuk semua Room; indeks 1 sampai 12*/
+	Table T[13];
+	int Neff = 12;
 } ArrTable;
 
 
 /*---------- MATRIKS PETA ----------*/
-#define M 8
-#define N 8
-
-typedef char simbol[2];
-
-typedef struct { 
-    simbol T[M+1][N+1]; // peta berupa matriks simbol; lihat legenda di bawah
-    int NBrsEff;        // ukuran vertikal peta = M (konstan)
-    int NKolEff;        // ukuran horizontal peta = N (konstan)
-} MatriksPeta;
-
-// LEGENDA
-// -- : grid kosong
-// mm : Counter; m = IngredientKey
-// TT : Food Tray
-// XX : kursi kosong (bisa menjadi CC)
-// CC : kursi terisi (bisa menjadi XX)
-// NN : indeks Table
-// PP : Player (posisi player berubah-ubah)
-// DD : Door
-
-// N.B. Simbol berupa array of char karena indeks Table harus dua digit.
-
-/*---------- STACK HAND DAN TRAY ----------*/
-#define MaxStack 5
+typedef char symbol[2];
 
 typedef struct {
-	char T[MaxStack+1];     // stack makanan/bahan; indeks 1 sampai MaxStack
-	int TOP;                // indeks TOP stack
-} Stack;
+	/* Akses array 1..8 */
+	symbol T[9][9];
+	int NBrsEff = 8;
+	int NKolEff = 8;
+} MapMatrix;
 
-// a sampai o = bahan
-// p sampai w = makanan
+/*LEGENDA
+-- : grid kosong
+mm : Counter; m = IngredientKey
+TT : Food Tray
+XX : kursi kosong (bisa menjadi CC)
+CC : kursi terisi (bisa menjadi XX)
+NN : indeks Table
+PP : Player (posisi player berubah-ubah)
+DD : Door
+N.B. Simbol berupa array of char karena indeks Table harus dua digit.*/
+
+/*---------- STACK HAND & TRAY ----------*/
+#define MaxStack 5
+
+typedef struct { 
+	/* indeks dimulai dari 1..MaxStack 
+	** indek TOP stack */
+	char T[MaxStack+1];
+	int TOP;
+} Stack;
+/* a..o = bahan
+** p..w = makanan */
 
 /*-----------FOOD TREE-------------*/
+typedef char FoodKey;		// karakter kunci bahan atau makanan jadi; a sampai w 
+
 typedef struct tNode *addressNode;
 typedef struct tNode {
-	char Info;		    // nilai elemen node (kunci karakter makanan, p sampai w)
-	addressNode left;	// address cabang kiri
-	addressNode right;	// address cabang kanan
+	/* FoodKey	: value elemen pada NODE
+	** left		: cabang kiri
+	** right	: cabang kanan */
+	char Info;
+	address left;
+	address right;
 } Node;
 
 typedef addressNode FoodTree;
@@ -133,13 +139,17 @@ typedef addressNode FoodTree;
 #define MaxOrder 8
 
 typedef struct {
-    char DishKey;   // karakter kunci makanan
-    int TableIndex; // indeks Table yang memesan makanan
+	/* DishKey		: kata kunci makanan
+	** TableIndex	: no meja yang memesan mknn */
+	char DishKey;
+	int TableIndex;
 } Order;
 
-typedef struct { 
-	Order T[MaxOrder+1];    // array Order; indeks 1 sampai MaxOrder
-	int Neff;               // jumlah Order
+typedef struct {
+	/* Array of Order	: Susunan Order
+	** Neff				: Jumlah Order maks yang dapat diingat */
+	Order T[MaxOrder+1];
+	int Neff;
 } ArrOrder;
 
 
@@ -149,17 +159,25 @@ typedef struct {
 #define MaxQueue 5
 
 typedef struct {
-    boolean Star;   // Customer adalah Star Customer
-    int Persons;    // jumlah orang
-    int Patience;   // tingkat kesabaran; saat muncul di WaitList 30, setelah duduk ditambah 60
-    int TableIndex; // indeks Table setelah Customer duduk
+	/* Star		: apakah CUSTOMER tersebut VIP
+	** Persons	: jumlah orang per tamu
+	** Patience	: LEVEL kesabaran tamu, saat ngantri, 30, setelah dapat duduk, +60
+	** TableIndex	: no MEJA setelah duduk, NOL(0) jika masih dalam ANTRIAN */
+	boolean Star;
+	int Persons;
+	int Patience;
+	int TableIndex;
 } Customer;
 
 typedef struct {
-    Customer * T;   // queue Customer; indeks 1 sampai MaxQueue
-    int HEAD;       // indeks HEAD queue
-    int TAIL;       // indeks TAIL queue
-    int MaxEl;      // jumlah Customer pada queue = MaxQueue
+	/* T		: QUEUE Customer
+	** HEAD		: yang akan keluar dahulu
+	** TAIL 	: yang masuk terakhir
+	** NBQueue	: jumlah antrian */
+	Customer *T;
+	int HEAD;
+	int TAIL;
+	int NBQueue;
 } Queue;
 
 
@@ -167,38 +185,80 @@ typedef struct {
 #define MaxNameLength 20
 
 typedef struct {
-    char Name[MaxNameLength];   // string nama Player
-    int Money;                  // jumlah uang Player
-    int Life;                   // jumlah nyawa Player
-    int Time;                   // waktu berjalan permainan
-    int Room;                   // Room letak Player
-    Point Position;             // koordinat letak Player pada MatriksPeta Room
+	/* Name 	: nama player, maks 20 karakter
+	** Money	: uang player
+	** Life		: "nyawa" player
+	** Time 	: time ELAPSED sejak game dimulai
+	** Room		: nomor ruangan player currently berada
+	** Position : koordinat player di dalam ruang terkait */
+	char Name[MaxNameLength];
+	int Money;
+	int Life;
+	int Time;
+	int Room;
+	Point Position;
 } Player;
 
 
 /*---------- SELEKTOR UNTUK ADT ----------*/
-#define Absis(Point)   (Point).X
-#define Ordinat(Point) (Point).Y
+#define Absis(Point)	(Point).X
+#define Ordinat(Point)	(Point).Y
 
-#define Neff(Array)   (Array).Neff
-#define T(Array)    (Array).T
-#define ElmtA(Array,i) (Array).T[(i)]
+#define Neff(Array)	(Array).Neff
+#define T(Array)	(Array).T
+#define ElmtA(Array,i)	(Array).T[(i)]
 
-#define NBrsEff(Matriks)  (Matriks).NBrsEff
-#define NKolEff(Matriks)  (Matriks).NKolEff
-#define ElmtM(Matriks,i,j) (Matriks).T[(i)][(j)]
+#define NBrsEff(Matriks)	(Matriks).NBrsEff
+#define NKolEff(Matriks)	(Matriks).NKolEff
+#define ElmtM(Matriks,i,j)	(Matriks).T[(i)][(j)]
 
-#define Head(Queue)     (Queue).HEAD
-#define Tail(Queue)     (Queue).TAIL
-#define InfoHead(Queue) (Queue).T[(Queue).HEAD]
-#define InfoTail(Queue) (Queue).T[(Queue).TAIL]
-#define MaxEl(Queue)    (Queue).MaxEl
+#define Head(Queue)		(Queue).HEAD
+#define Tail(Queue)		(Queue).TAIL
+#define InfoHead(Queue)	(Queue).T[(Queue).HEAD]
+#define InfoTail(Queue)	(Queue).T[(Queue).TAIL]
+#define MaxEl(Queue)	(Queue).MaxEl
 
-#define Top(Stack)     (Stack).TOP
-#define InfoTop(Stack) (Stack).T[(Stack).TOP]
+#define Top(Stack)		(Stack).TOP
+#define InfoTop(Stack)	(Stack).T[(Stack).TOP]
 
-#define Info(Address) (Address)->info
-#define Next(Address) (Address)->next
-#define First(List)   (List).First
+#define Info(Address)	(Address)->info
+#define Next(Address)	(Address)->next
+#define First(List)		(List).First
+
+/******** PRIMITIF POINT ********/
+Point Point_Create (int x, int y);
+/** P1 == P2 (?) **/
+boolean Point_Equal (Point P1, Point P2);
+
+/** Menggeser Posisi **/
+void Point_Translate (Point *P, int dx, int dy);
+
+/******** PRIMITIF ARRAY TABLE ********/
+/** Meja menjadi KOSONG, tanpa CUSTOMER **/
+void Table_Reset (Table *T);
+
+/** Membuat susunan Meja, kapasitas, dan posisi **/
+void Tables_Create (ArrTable *ArrT);
+
+/** TABLE sudah diduduki? **/
+boolean Table_Occupied (Table *T);
+
+/******** PRIMITIF PETA ********/
+/** Menciptakan PETA dari START GAME **/
+void Map_CreateSub (MapMatrix *MM);
+
+/**** Termasuk UI ****/
+/** Menampilkan Peta Kecil SATU RUANG **/
+void Map_Show (MapMatrix MM);
+/** Meng-update Peta Kecil elemen di dalam ruangan
+*** berubah **/
+void Map_Update (MapMatrix MM);
+
+/******** PRIMITIF STACK HAND ********/
+void Stack_CreateEmpty (Stack *St);
+boolean Stack_IsEmpty (Stack St);
+boolean Stack_IsFull (Stack St);
+void Stack_Push (Stack *St, char Key);
+void Stack_Pop (Stack *St, char *Key);
 
 #endif
