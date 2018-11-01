@@ -4,13 +4,13 @@
 
 /*---------- CUSTOMER ----------*/
 
-// Konstruktor Customer
+/* Constructor */
 void NewCustomer (Customer * C) {
     int x;
     
-    // Menentukan tipe Customer
-    x = rand() % 20; // Kemungkinan Star Customer 1/20
-    if (x == 20) {
+    // Determining customer type
+    x = rand() % 5;
+    if (x == 0) {
         (*C).Star = true;
         (*C).Patience = InitialPatience / 2;
     } else {
@@ -18,22 +18,21 @@ void NewCustomer (Customer * C) {
         (*C).Patience = InitialPatience;
     }
 
-    // Menentukan jumlah orang Customer
-    x = rand() % 2; // Kemungkinan 2 atau 4 50/50
-    if (x == 0) {
+    // Determining number of persons
+    x = rand() % 10;
+    if (x > 5) {
         (*C).Persons = 2;
     } else {
         (*C).Persons = 4;
     }
 
-    // Customer tidak berada pada Table mana pun
     (*C).TableIndex = 0; 
 };
 
 
 /*---------- QUEUE ----------*/
 
-// Uji Queue
+/* Prototypes */
 boolean IsEmpty (Queue Q) {
     return ((Head(Q) == 0) && (Tail(Q) == 0));
 };
@@ -50,7 +49,7 @@ int NBElmt (Queue Q) {
     }
 };
 
-// Konstruktor Queue
+/* Constructor */
 void CreateEmpty (Queue * Q, int Max) {
     (*Q).T = (Customer *) malloc ((Max + 1) * sizeof(Customer));
     if ((*Q).T != NULL) {
@@ -62,7 +61,7 @@ void CreateEmpty (Queue * Q, int Max) {
     }
 };
 
-// Tambah/Hapus Elemen Queue
+/* Add/Delete queue element */
 void Add (Queue * Q, Customer C) {
     if (IsEmpty(*Q)) {
         Head(*Q)++;
@@ -73,24 +72,28 @@ void Add (Queue * Q, Customer C) {
     InfoTail(*Q) = C;
 };
 
-void SpecialAdd (Queue * Q, Customer C) {
+void StarAdd (Queue * Q, Customer C) {
     if (IsEmpty(*Q)) {
         Head(*Q)++;
         Tail(*Q)++;
+        InfoHead(*Q) = C;
     } else {
         Tail(*Q)++;
-        for (int i = NBElmt(*Q); i >= 1; i--) {
-            (*Q).T[i+1] = (*Q).T[i];
+        int i;
+        i = NBElmt(*Q);
+        while (((*Q).T[i-1].Star != true) && (i > 1)) {
+            (*Q).T[i] = (*Q).T[i-1];
+            i--;
         }
+        (*Q).T[i] = C;
     }
-    InfoHead(*Q) = C;
 };
 
 void Del (Queue * Q, Customer * C) {
     *C = InfoHead(*Q);
     if (Head(*Q) == Tail(*Q)) {
-        Head(*Q) == 0;
-        Tail(*Q) == 0;
+        Head(*Q) = 0;
+        Tail(*Q) = 0;
     } else {
         for (int i = 1; i <= NBElmt(*Q); i++) {
             (*Q).T[i] = (*Q).T[i+1];
@@ -107,49 +110,79 @@ void DelX (Queue * Q, int X, Customer * C) {
         Tail(*Q)--;
     } else {
         *C = (*Q).T[X];
-        for (int i = X; X <= NBElmt(*Q); i++) {
+        for (int i = X; i < NBElmt(*Q); i++) {
             (*Q).T[i] = (*Q).T[i+1];
         }
         Tail(*Q)--;
     }
 }
 
-// Menentukan apa yang terjadi pada Queue setelah 1 tick
+/* Queue changes after 1 tick */
 void LessPatient (Queue * Q) {
-    for (int i = 1; i <= NBElmt(*Q); i++) {
-        (*Q).T[i].Patience--;
-        if ((*Q).T[i].Patience <= 0) {
-            Customer C;
-            DelX(Q, i, &C);
+    if (!IsEmpty(*Q)) {
+        for (int i = 1; i <= NBElmt(*Q); i++) {
+            (*Q).T[i].Patience--;
         }
     }
 };
 
-void UpdateQueue (Queue * Q) {
-    // Kurangi Patience semua Customer, jika ada yang Patience <= 0, hapus dari Queue
-    LessPatient(Q);
-
-    // Menentukan apakah ada Customer baru yang datang
-    int x = rand() % 20;
-    if (x > 40) {
-        Customer C;
-        NewCustomer(&C);
-        if (C.Star == true) {
-            SpecialAdd(Q, C);
-        } else {
-            Add(Q, C);
+void CustomersLeave (Queue * Q) {
+    Customer C;
+    if (!IsEmpty(*Q)) {
+        for (int i = 1; i <= NBElmt(*Q); i++) {
+            if ((*Q).T[i].Patience == 0) {
+                DelX(Q, i, &C);
+                i--;
+                //printf("A customer has left...\n");
+            }
         }
-    } else {
-        // Tidak ada Customer yang datang
     }
 }
 
-// Debugging
+void InitiateQueue (Queue * Q) {
+    CreateEmpty(Q, MaxQueue);
+    Customer C;
+    NewCustomer(&C);
+    C.Star = false;
+    C.Patience = 30;
+    Add(Q, C);
+};
+
+void UpdateQueue (Queue * Q) {
+    int x;
+
+    // Decrease patience of all customers
+    LessPatient(Q);
+    // Removes customers with patience = 0
+    CustomersLeave(Q);
+
+    // Determines if a new customer is arriving
+    x = rand() % 100;
+    if (x >= 90) {
+        if (!IsFull(*Q)) {
+            Customer C;
+            NewCustomer(&C);
+            if (C.Star == true) {
+                //printf("Incoming star customer!\n");
+                StarAdd(Q, C);
+            } else {
+                //printf("Incoming regular customer!\n");
+                Add(Q, C);
+            }
+        } else {
+            // If queue is full, no customers arrive
+        }
+    } else {
+        // No customers arrive
+    }
+};
+
+/* Print queue */
 void PrintQueue (Queue Q) {
     if (IsEmpty(Q)) {
-        printf("Empty queue\n"); // debug message
+        printf("Empty queue\n");
     } else {
-        for (int i = 1; i <= NBElmt(Q); i++) {
+        for (int i = NBElmt(Q); i > 0; i--) {
             for (int j = 1; j <= Q.T[i].Persons; j++) {
                 if (Q.T[i].Star == true) {
                     printf("S");
@@ -157,7 +190,13 @@ void PrintQueue (Queue Q) {
                     printf("C");
                 }
             }
+            printf(" "); PrintPatience(Q.T[i]);
             printf("\n");
         }
     }
 };
+
+/* Debugging */
+void PrintPatience (Customer C) {
+    printf("(%d)", C.Patience);
+}

@@ -4,32 +4,53 @@
 #include "library.h"
 
 /*---------- CUSTOMER ----------*/
-// Konstruktor Customer
-void NewCustomer (Customer * C);    // Menciptakan customer baru
-
+/* Constructor */
+void NewCustomer (Customer * C);
+// Generates a new customer
 
 /*---------- QUEUE ----------*/
-// Uji Queue
-boolean IsEmpty (Queue Q);  // Mengembalikan true jika Q kosong (Head = Tail = 0)
-boolean IsFull (Queue Q);   // Mengembalikan true jika NBElmt = MaxEl
+/* Prototypes */
+boolean IsEmpty (Queue Q); 
+// Returns TRUE if Head = Tail = 0
+boolean IsFull (Queue Q);  
+// Returns TRUE if NBElmt = MaxEl
+int NBElmt (Queue Q);
+// Returns Tail - Head + 1
 
-// Jumlah elemen Queue
-int NBElmt (Queue Q);       // Mengembalikan Tail - Head + 1
+/* Constructor */
+void CreateEmpty (Queue * Q, int Max); 
+// Creates empty queue; MaxEl = Max
 
-// Konstruktor Queue
-void CreateEmpty (Queue * Q, int Max);  // Membuat Q kosong dengan MaxEl = Max
+/* Add/Delete queue element */
+void Add (Queue * Q, Customer C);
+// Adds new element to tail of Q
+void StarAdd (Queue * Q, Customer C);
+// Adds new element to head of Q
+void Del (Queue * Q, Customer * C);
+// Deletes head element of Q
+void DelX (Queue * Q, int X, Customer * C);
+// Deletes X-th element
 
-// Tambah/Hapus Elemen Queue
-void Add (Queue * Q, Customer C);           // Menambah elemen baru ke belakang Q
-void SpecialAdd (Queue * Q, Customer C);    // Menambah elemen baru ke depan Q
-void Del (Queue * Q, Customer * C);         // Menghapus elemen paling depan Q
-void DelX (Queue * Q, int X, Customer * C); // Menghapus elemen ke-X
+/* Queue changes after 1 tick */
+void LessPatient (Queue * Q);
+// Decreases patience of all customers in the queue
+void CustomersLeave (Queue *Q);
+// Detects and deletes customers with patience = 0
+void InitiateQueue (Queue * Q);
+// Determines state of queue during start of game
+void UpdateQueue (Queue * Q);
+/* Collection of changes made after 1 tick:
+    - LessPatient
+    - CustomersLeave
+    - Determines whether to add a new customer to the queue
+*/
 
-// Menentukan apa yang terjadi pada Queue setelah 1 tick
-void LessPatient (Queue * Q);   // Mengurangi Patience semua Customer; menghapus Customer yang Patience = 0
-void UpdateQueue (Queue * Q);   // LessPatient; menentukan adanya Customer baru
+/* Print queue */
+void PrintQueue (Queue Q);
+// Prints every element of Q with format of C for each regular customer and S for each star customer
 
-// Debugging
-void PrintQueue (Queue Q); // Menulis isi Q
+/* Debugging */
+void PrintPatience (Customer C);
+// Prints the patience of customer
 
 #endif
