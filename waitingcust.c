@@ -142,6 +142,7 @@ void UpdateQueue (Queue * Q) {
     } else {
         // Tidak ada Customer yang datang
     }
+}
 
 // Debugging
 void PrintQueue (Queue Q) {
@@ -159,6 +160,4 @@ void PrintQueue (Queue Q) {
             printf("\n");
         }
     }
-};
-
 };
