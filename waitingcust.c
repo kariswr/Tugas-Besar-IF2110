@@ -142,4 +142,23 @@ void UpdateQueue (Queue * Q) {
     } else {
         // Tidak ada Customer yang datang
     }
+
+// Debugging
+void PrintQueue (Queue Q) {
+    if (IsEmpty(Q)) {
+        printf("Empty queue\n"); // debug message
+    } else {
+        for (int i = 1; i <= NBElmt(Q); i++) {
+            for (int j = 1; j <= Q.T[i].Persons; j++) {
+                if (Q.T[i].Star == true) {
+                    printf("S");
+                } else {
+                    printf("C");
+                }
+            }
+            printf("\n");
+        }
+    }
+};
+
 };

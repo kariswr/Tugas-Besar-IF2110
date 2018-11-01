@@ -29,4 +29,7 @@ void DelX (Queue * Q, int X, Customer * C); // Menghapus elemen ke-X
 void LessPatient (Queue * Q);   // Mengurangi Patience semua Customer; menghapus Customer yang Patience = 0
 void UpdateQueue (Queue * Q);   // LessPatient; menentukan adanya Customer baru
 
+// Debugging
+void PrintQueue (Queue Q); // Menulis isi Q
+
 #endif
