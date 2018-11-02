@@ -9,7 +9,7 @@ void NewCustomer (Customer * C);
 // Generates a new customer
 
 /*---------- QUEUE ----------*/
-/* Prototypes */
+/* Miscellaneous */
 boolean IsEmpty (Queue Q); 
 // Returns TRUE if Head = Tail = 0
 boolean IsFull (Queue Q);  
