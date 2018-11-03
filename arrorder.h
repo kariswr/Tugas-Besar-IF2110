@@ -10,25 +10,25 @@ void NewOrder (Order * O, int Idx);
 
 /*---------- ARRAY OF ORDER ----------*/
 /* Constructor */
-void MakeEmpty (ArrOrder * AO);
+void MakeEmptyAO (ArrOrder * AO);
 // Creates an empty array of orders
 
 /* Miscellaneous */
-boolean IsEmpty (ArrOrder AO);
+boolean IsAOEmpty (ArrOrder AO);
 // Returns TRUE if OL is empty (Neff = 0)
-boolean IsFull (ArrOrder AO);
+boolean IsAOFull (ArrOrder AO);
 // Returns TRUE if OL is full (Neff = MaxOrder)
-int Search (ArrOrder AO, char DishKey, int TableIndex);
+int SearchAO (ArrOrder AO, char DishKey, int TableIndex);
 // Returns the index for the order, 0 if there is no such order
 
 /* Add/Delete array elements */
-void AddLast (ArrOrder * AO, Order O);
+void AddLastAO (ArrOrder * AO, Order O);
 // Adds an order as the last element of the array
-void DelX (ArrOrder * AO, int X, Order * O);
+void DelXAO (ArrOrder * AO, int X, Order * O);
 // Deletes X-th element of the array
 
 /* Print array of order */
-void PrintOrders (ArrOrder OA);
+void PrintAO (ArrOrder AO);
 // Prints the contents of array as tuples of <"Dish", TableIndex>
 
 #endif

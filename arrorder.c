@@ -29,20 +29,20 @@ void NewOrder (Order * O, int Idx) {
 
 /*---------- ARRAY OF ORDER ----------*/
 /* Constructor */
-void MakeEmpty (ArrOrder * AO) {
+void MakeEmptyAO (ArrOrder * AO) {
     Neff(*AO) = 0;
 };
 
 /* Miscellaneous */
-boolean IsEmpty (ArrOrder AO) {
+boolean IsAOEmpty (ArrOrder AO) {
     return (Neff(AO) == 0);
 };
 
-boolean IsFull (ArrOrder AO) {
+boolean IsAOFull (ArrOrder AO) {
     return (Neff(AO) == MaxOrder);
 };
 
-int Search (ArrOrder AO, char DishKey, int TableIndex) {
+int SearchAO (ArrOrder AO, char DishKey, int TableIndex) {
     int i;
     boolean Found;
     i = 1;
@@ -62,8 +62,8 @@ int Search (ArrOrder AO, char DishKey, int TableIndex) {
 };
 
 /* Add/Delete array elements */
-void AddLast (ArrOrder * AO, Order O) {
-    if (IsFull(*AO)) {
+void AddLastAO (ArrOrder * AO, Order O) {
+    if (IsAOFull(*AO)) {
         printf("Order array is full.\n");
     } else {
         Neff(*AO)++;
@@ -71,8 +71,8 @@ void AddLast (ArrOrder * AO, Order O) {
     }
 };
 
-void DelX (ArrOrder * AO, int X, Order * O) {
-    if (IsEmpty(*AO)) {
+void DelXAO (ArrOrder * AO, int X, Order * O) {
+    if (IsAOEmpty(*AO)) {
         printf("Order array is empty.\n");
     } else {
         *O = ElmtA(*AO, X);
@@ -81,13 +81,13 @@ void DelX (ArrOrder * AO, int X, Order * O) {
 };
 
 /* Print array of order */
-void PrintOrders (ArrOrder OA) {
+void PrintAO (ArrOrder AO) {
     printf("Order\n");
-    if (IsEmpty(OA)) {
+    if (IsAOEmpty(AO)) {
         printf("Empty array\n");
     } else {
-        for (int i = 1; i <= Neff(OA); i++) {
-            switch (ElmtA(OA, i).DishKey) {
+        for (int i = 1; i <= Neff(AO); i++) {
+            switch (ElmtA(AO, i).DishKey) {
                 case 'p': printf("Banana Split");
                 case 'q': printf("Sundae");
                 case 'r': printf("Nasi Telur Dadar");
@@ -97,7 +97,7 @@ void PrintOrders (ArrOrder OA) {
                 case 'v': printf("Spaghetti Bolognese");
                 case 'w': printf("Spaghetti Carbonara");
             }
-            printf(", %d\n", ElmtA(OA, i).TableIndex);
+            printf(", %d\n", ElmtA(AO, i).TableIndex);
         }
     }
 };

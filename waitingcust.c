@@ -31,15 +31,15 @@ void NewCustomer (Customer * C) {
 /*---------- QUEUE ----------*/
 
 /* Prototypes */
-boolean IsEmpty (Queue Q) {
+boolean IsQEmpty (Queue Q) {
     return ((Head(Q) == 0) && (Tail(Q) == 0));
 };
 
-boolean IsFull (Queue Q) {
+boolean IsQFull (Queue Q) {
     return (NBElmt(Q) == MaxEl(Q));
 };
 
-int NBElmt (Queue Q) {
+int NBElmtQ (Queue Q) {
     if (IsEmpty(Q)) {
         return 0;
     } else {
@@ -48,7 +48,7 @@ int NBElmt (Queue Q) {
 };
 
 /* Constructor */
-void CreateEmpty (Queue * Q, int Max) {
+void CreateEmptyQ (Queue * Q, int Max) {
     (*Q).T = (Customer *) malloc ((Max + 1) * sizeof(Customer));
     if ((*Q).T != NULL) {
         MaxEl(*Q) = Max;
@@ -60,7 +60,7 @@ void CreateEmpty (Queue * Q, int Max) {
 };
 
 /* Add/Delete queue element */
-void Add (Queue * Q, Customer C) {
+void AddQ (Queue * Q, Customer C) {
     if (IsEmpty(*Q)) {
         Head(*Q)++;
         Tail(*Q)++;
@@ -70,7 +70,7 @@ void Add (Queue * Q, Customer C) {
     InfoTail(*Q) = C;
 };
 
-void StarAdd (Queue * Q, Customer C) {
+void StarAddQ (Queue * Q, Customer C) {
     if (IsEmpty(*Q)) {
         Head(*Q)++;
         Tail(*Q)++;
@@ -87,7 +87,7 @@ void StarAdd (Queue * Q, Customer C) {
     }
 };
 
-void Del (Queue * Q, Customer * C) {
+void DelQ (Queue * Q, Customer * C) {
     *C = InfoHead(*Q);
     if (Head(*Q) == Tail(*Q)) {
         Head(*Q) = 0;
@@ -100,7 +100,7 @@ void Del (Queue * Q, Customer * C) {
     }
 };
 
-void DelX (Queue * Q, int X, Customer * C) {
+void DelXQ (Queue * Q, int X, Customer * C) {
     if (X == Head(*Q)) {
         Del(Q, C);
     } else if (X == Tail(*Q)) {

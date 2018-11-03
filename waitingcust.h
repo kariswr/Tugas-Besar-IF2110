@@ -10,25 +10,25 @@ void NewCustomer (Customer * C);
 
 /*---------- QUEUE ----------*/
 /* Miscellaneous */
-boolean IsEmpty (Queue Q); 
+boolean IsQEmpty (Queue Q); 
 // Returns TRUE if Head = Tail = 0
-boolean IsFull (Queue Q);  
+boolean IsQFull (Queue Q);  
 // Returns TRUE if NBElmt = MaxEl
-int NBElmt (Queue Q);
+int NBElmtQ (Queue Q);
 // Returns Tail - Head + 1
 
 /* Constructor */
-void CreateEmpty (Queue * Q, int Max); 
+void CreateEmptyQ (Queue * Q, int Max); 
 // Creates empty queue; MaxEl = Max
 
 /* Add/Delete queue element */
-void Add (Queue * Q, Customer C);
+void AddQ (Queue * Q, Customer C);
 // Adds new element to tail of Q
-void StarAdd (Queue * Q, Customer C);
+void StarAddQ (Queue * Q, Customer C);
 // Adds new element to head of Q
-void Del (Queue * Q, Customer * C);
+void DelQ (Queue * Q, Customer * C);
 // Deletes head element of Q
-void DelX (Queue * Q, int X, Customer * C);
+void DelXQ (Queue * Q, int X, Customer * C);
 // Deletes X-th element
 
 /* Queue changes after 1 tick */

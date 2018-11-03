@@ -75,6 +75,30 @@ typedef struct {
     int Y;
 } Point;
 
+/*---------- QUEUE CUSTOMER ----------*/
+#define InitialPatience 30
+#define AddPatience 60
+#define MaxQueue 5
+typedef struct {
+ 	/* Star		: apakah CUSTOMER tersebut VIP
+	** Persons	: jumlah orang per tamu
+	** Patience	: LEVEL kesabaran tamu, saat ngantri, 30, setelah dapat duduk, +60
+	** TableIndex	: no MEJA setelah duduk, NOL(0) jika masih dalam ANTRIAN */
+	boolean Star;
+	int Persons;
+	int Patience;
+} Customer;
+
+typedef struct {
+	/* T		: QUEUE Customer
+	** HEAD		: yang akan keluar dahulu
+	** TAIL 	: yang masuk terakhir
+	** NBQueue	: jumlah antrian */
+	Customer *T;
+	int HEAD;
+	int TAIL;
+	int MaxEl;
+	} Queue;
 
 /*---------- ARRAY TABLE ----------*/
 typedef struct {
@@ -163,33 +187,6 @@ typedef struct {
 	Order T[MaxOrder+1];
 	int Neff;
 } ArrOrder;
-
-
-/*---------- QUEUE CUSTOMER ----------*/
-#define InitialPatience 30
-#define AddPatience 60
-#define MaxQueue 5
-typedef struct {
- 	/* Star		: apakah CUSTOMER tersebut VIP
-	** Persons	: jumlah orang per tamu
-	** Patience	: LEVEL kesabaran tamu, saat ngantri, 30, setelah dapat duduk, +60
-	** TableIndex	: no MEJA setelah duduk, NOL(0) jika masih dalam ANTRIAN */
-	boolean Star;
-	int Persons;
-	int Patience;
-} Customer;
-
-typedef struct {
-	/* T		: QUEUE Customer
-	** HEAD		: yang akan keluar dahulu
-	** TAIL 	: yang masuk terakhir
-	** NBQueue	: jumlah antrian */
-	Customer *T;
-	int HEAD;
-	int TAIL;
-	int MaxEl;
-	} Queue;
-
 
 /*---------- PLAYER ----------*/
 #define MaxNameLength 20
