@@ -4,8 +4,8 @@
 /*
 ---------- DAFTAR ADT YANG DAPAT DIGUNAKAN ----------
 typedef struct {
-	int X;
-	int Y;
+    int X;
+    int Y;
 } Point;
 
 typedef struct { 
@@ -15,15 +15,15 @@ typedef struct {
 
 typedef struct { 
 	infotype T[100][100];
-	int NBrsEff;
+    int NBrsEff;
 	int NKolEff;
 } MatriksInfotype;
 
 typedef struct {
-	infotype * T;
-	int HEAD;
-	int TAIL;
-	int MaxEl;
+    infotype * T;
+    int HEAD;
+    int TAIL;
+    int MaxEl;
 } QueueInfotype;
 
 typedef struct { 
@@ -51,8 +51,13 @@ typedef struct tNode {
 } Node;
 typedef address BinTree;
 
+-------MESIN KARAKTER-------
+#define MARK '.'
+// State Mesin 
+extern char CC;
+extern boolean EOP;
+
 JAM?
-MESIN KARAKTER?
 MESIN KATA?
 MULTILIST?
 GRAPH?
@@ -66,8 +71,8 @@ GRAPH?
 
 /*---------- POINT ----------*/
 typedef struct {
-	int X;
-	int Y;
+    int X;
+    int Y;
 } Point;
 
 
@@ -87,7 +92,7 @@ typedef struct {
 
 #define NTable 12
 
-typedef struct {
+typedef struct { 
 	/* termasuk semua Room; indeks 1 sampai 12*/
 	Table T[NTable+1];
 	int Neff;
@@ -100,8 +105,8 @@ typedef char symbol[2];
 #define M 8
 #define N 8
 
-typedef struct {
-	/* Akses array 1..8 */
+typedef struct { 
+		/* Akses array 1..8 */
 	symbol T[M+1][N+1];
 	int NBrsEff;
 	int NKolEff;
@@ -121,7 +126,7 @@ N.B. Simbol berupa array of char karena indeks Table harus dua digit.*/
 /*---------- STACK HAND & TRAY ----------*/
 #define MaxStack 5
 
-typedef struct { 
+typedef struct {
 	/* indeks dimulai dari 1..MaxStack 
 	** indek TOP stack */
 	char T[MaxStack+1];
@@ -131,16 +136,13 @@ typedef struct {
 ** p..w = makanan */
 
 /*-----------FOOD TREE-------------*/
-typedef char FoodKey;		// karakter kunci bahan atau makanan jadi; a sampai w 
-
 typedef struct tNode *addressNode;
 typedef struct tNode {
-	/* FoodKey	: value elemen pada NODE
-	** left		: cabang kiri
+	/* left		: cabang kiri
 	** right	: cabang kanan */
-	char Info;
-	addressNode left;
-	addressNode right;
+	char info;		// nilai elemen node (kunci karakter makanan, p sampai w)
+	addressNode left;	// address cabang kiri
+	addressNode right;	// address cabang kanan
 } Node;
 
 typedef addressNode FoodTree;
@@ -155,7 +157,7 @@ typedef struct {
 	int TableIndex;
 } Order;
 
-typedef struct {
+typedef struct { 
 	/* Array of Order	: Susunan Order
 	** Neff				: Jumlah Order maks yang dapat diingat */
 	Order T[MaxOrder+1];
@@ -167,9 +169,8 @@ typedef struct {
 #define InitialPatience 30
 #define AddPatience 60
 #define MaxQueue 5
-
 typedef struct {
-	/* Star		: apakah CUSTOMER tersebut VIP
+ 	/* Star		: apakah CUSTOMER tersebut VIP
 	** Persons	: jumlah orang per tamu
 	** Patience	: LEVEL kesabaran tamu, saat ngantri, 30, setelah dapat duduk, +60
 	** TableIndex	: no MEJA setelah duduk, NOL(0) jika masih dalam ANTRIAN */
@@ -187,7 +188,7 @@ typedef struct {
 	int HEAD;
 	int TAIL;
 	int MaxEl;
-} Queue;
+	} Queue;
 
 
 /*---------- PLAYER ----------*/
@@ -208,30 +209,42 @@ typedef struct {
 	Point Position;
 } Player;
 
+/*-------MESIN KARAKTER-------*/
+/*Silakan modifikasi procedure START pada ADT mesinkar bergantung pada nama file txt*/
+/*Contoh: procedure STARTTREE untuk membaca file foodtree*/
+
+#define MARK '.'
+/* State Mesin */
+extern char CC;
+extern boolean EOP;
 
 /*---------- SELEKTOR UNTUK ADT ----------*/
-#define Absis(Point)	(Point).X
-#define Ordinat(Point)	(Point).Y
+#define Absis(Point)   (Point).X
+#define Ordinat(Point) (Point).Y
 
 #define Neff(Array)	(Array).Neff
-#define T(Array)	(Array).T
-#define ElmtA(Array,i)	(Array).T[(i)]
+#define T(Array)    (Array).T
+#define ElmtA(Array,i) (Array).T[(i)]
 
 #define NBrsEff(Matriks)	(Matriks).NBrsEff
 #define NKolEff(Matriks)	(Matriks).NKolEff
-#define ElmtM(Matriks,i,j)	(Matriks).T[(i)][(j)]
+#define ElmtM(Matriks,i,j) (Matriks).T[(i)][(j)]
 
-#define Head(Queue)		(Queue).HEAD
-#define Tail(Queue)		(Queue).TAIL
-#define InfoHead(Queue)	(Queue).T[(Queue).HEAD]
-#define InfoTail(Queue)	(Queue).T[(Queue).TAIL]
-#define MaxEl(Queue)	(Queue).MaxEl
+#define Head(Queue)     (Queue).HEAD
+#define Tail(Queue)     (Queue).TAIL
+#define InfoHead(Queue) (Queue).T[(Queue).HEAD]
+#define InfoTail(Queue) (Queue).T[(Queue).TAIL]
+#define MaxEl(Queue)    (Queue).MaxEl
 
-#define Top(Stack)		(Stack).TOP
-#define InfoTop(Stack)	(Stack).T[(Stack).TOP]
+#define Top(Stack)     (Stack).TOP
+#define InfoTop(Stack) (Stack).T[(Stack).TOP]
 
-#define Info(Address)	(Address)->info
-#define Next(Address)	(Address)->next
-#define First(List)		(List).First
+#define Info(Address) (Address)->info
+#define Next(Address) (Address)->next
+#define First(List)   (List).First
+
+#define Akar(addressNode) (addressNode)->info
+#define Left(addressNode) (addressNode)->left
+#define Right(addressNode) (addressNode)->right
 
 #endif
