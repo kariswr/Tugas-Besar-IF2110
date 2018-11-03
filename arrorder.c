@@ -16,7 +16,7 @@ void NewOrder (Order * O, int Idx) {
         case 6: (*O).DishKey = 'v'; break;
         case 7: (*O).DishKey = 'w'; break;
     }
-    printf("X = %d; C = %c\n", x, (*O).DishKey);
+    //printf("X = %d; C = %c\n", x, (*O).DishKey);
     (*O).TableIndex = Idx;
 };
 
@@ -54,6 +54,17 @@ int SearchAO (ArrOrder AO, char DishKey, int TableIndex) {
     }
 };
 
+boolean HasOrdered (ArrOrder AO, int TableIndex) {
+    boolean Found;
+    Found = false;
+    for (int i = 1; i <= Neff(AO); i++) {
+        if ((ElmtA(AO, i).TableIndex == TableIndex)) {
+            Found = true;
+        }
+    }
+    return Found;
+}
+
 /* Add/Delete array elements */
 void AddLastAO (ArrOrder * AO, Order O) {
     if (IsAOFull(*AO)) {
@@ -74,7 +85,7 @@ void DelXAO (ArrOrder * AO, int X, Order * O) {
         }
         Neff(*AO)--;
     } else {
-        
+
     }
 };
 

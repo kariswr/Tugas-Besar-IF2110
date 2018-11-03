@@ -20,6 +20,8 @@ boolean IsAOFull (ArrOrder AO);
 // Returns TRUE if OL is full (Neff = MaxOrder)
 int SearchAO (ArrOrder AO, char DishKey, int TableIndex);
 // Returns the index for the order, 0 if there is no such order
+boolean HasOrdered (ArrOrder AO, int TableIndex);
+// Returns TRUE if a Table has ordered
 
 /* Add/Delete array elements */
 void AddLastAO (ArrOrder * AO, Order O);

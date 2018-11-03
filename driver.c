@@ -68,11 +68,19 @@ int main() {
     NewOrder(&O, 12);
     AddLastAO(&AO, O);
 
-    PrintAOWithIndex(AO); printf("\n");
+    printf("Index of last order: %d\n\n", SearchAO(AO, O.DishKey, O.TableIndex));
+
+    PrintAO(AO); printf("\n");
+
+    NewOrder(&O, 12);
+    if (HasOrdered(AO, 12)) {
+        printf("This table has ordered.\n\n");
+    } else {
+        AddLastAO(&AO, O);
+    }
 
     DelXAO(&AO, 1, &O);
     DelXAO(&AO, 3, &O);
-    PrintAOWithIndex(AO); printf("\n");
     DelXAO(&AO, 3, &O);
     PrintAOWithIndex(AO);
     
