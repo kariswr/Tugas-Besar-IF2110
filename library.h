@@ -76,11 +76,13 @@ typedef struct {
 	/* Capacity 	: maksimum orang tiap meja, 2 atau 4
 	** Room 		: nomor ruang
 	** Position 	: koordinat meja
-	** Occupied 	: apakah sudah diduduki */
+	** Occupied 	: apakah sudah diduduki
+	** Customer		: data customer yang menduduki meja */
 	int Capacity;
 	int Room;
 	Point Position;
 	boolean Occupied;
+	Customer Cust;
 } Table;
 
 #define NTable 12
@@ -174,7 +176,6 @@ typedef struct {
 	boolean Star;
 	int Persons;
 	int Patience;
-	int TableIndex;
 } Customer;
 
 typedef struct {
