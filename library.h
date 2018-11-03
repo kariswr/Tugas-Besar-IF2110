@@ -7,41 +7,33 @@ typedef struct {
     int X;
     int Y;
 } Point;
-
 typedef struct { 
 	infotype T[100];
 	int Neff;
 } ArrInfotype;
-
 typedef struct { 
 	infotype T[100][100];
     int NBrsEff;
 	int NKolEff;
 } MatriksInfotype;
-
 typedef struct {
     infotype * T;
     int HEAD;
     int TAIL;
     int MaxEl;
 } QueueInfotype;
-
 typedef struct { 
 	infotype T[100];
 	int TOP;
 } StackInfotype;
-
 typedef struct tElmtlist *address;
-
 typedef struct tElmtlist { 
 	infotype info;
 	address next;
 } ElmtListInfotype;
-
 typedef struct {
 	address First;
 } ListInfotype;
-
 -----------TREE--------------
 typedef struct tNode *address;
 typedef struct tNode {
@@ -50,18 +42,15 @@ typedef struct tNode {
 	address right;
 } Node;
 typedef address BinTree;
-
 -------MESIN KARAKTER-------
 #define MARK '.'
 // State Mesin 
 extern char CC;
 extern boolean EOP;
-
 JAM?
 MESIN KATA?
 MULTILIST?
 GRAPH?
-
 */
 
 /*---------- BOOLEAN ----------*/
@@ -74,6 +63,31 @@ typedef struct {
     int X;
     int Y;
 } Point;
+
+/*---------- QUEUE CUSTOMER ----------*/
+#define InitialPatience 30
+#define AddPatience 60
+#define MaxQueue 5
+typedef struct {
+ 	/* Star		: apakah CUSTOMER tersebut VIP
+	** Persons	: jumlah orang per tamu
+	** Patience	: LEVEL kesabaran tamu, saat ngantri, 30, setelah dapat duduk, +60
+	** TableIndex	: no MEJA setelah duduk, NOL(0) jika masih dalam ANTRIAN */
+	boolean Star;
+	int Persons;
+	int Patience;
+} Customer;
+
+typedef struct {
+	/* T		: QUEUE Customer
+	** HEAD		: yang akan keluar dahulu
+	** TAIL 	: yang masuk terakhir
+	** NBQueue	: jumlah antrian */
+	Customer *T;
+	int HEAD;
+	int TAIL;
+	int MaxEl;
+	} Queue;
 
 
 /*---------- ARRAY TABLE ----------*/
@@ -138,11 +152,12 @@ typedef struct {
 /*-----------FOOD TREE-------------*/
 typedef struct tNode *addressNode;
 typedef struct tNode {
-	/* left		: cabang kiri
+	/*info		:nilai elemen node (kunci karakter makanan, p sampai w)
+	** left		: cabang kiri
 	** right	: cabang kanan */
-	char info;		// nilai elemen node (kunci karakter makanan, p sampai w)
-	addressNode left;	// address cabang kiri
-	addressNode right;	// address cabang kanan
+	char info;
+	addressNode left;
+	addressNode right;
 } Node;
 
 typedef addressNode FoodTree;
@@ -163,33 +178,6 @@ typedef struct {
 	Order T[MaxOrder+1];
 	int Neff;
 } ArrOrder;
-
-
-/*---------- QUEUE CUSTOMER ----------*/
-#define InitialPatience 30
-#define AddPatience 60
-#define MaxQueue 5
-typedef struct {
- 	/* Star		: apakah CUSTOMER tersebut VIP
-	** Persons	: jumlah orang per tamu
-	** Patience	: LEVEL kesabaran tamu, saat ngantri, 30, setelah dapat duduk, +60
-	** TableIndex	: no MEJA setelah duduk, NOL(0) jika masih dalam ANTRIAN */
-	boolean Star;
-	int Persons;
-	int Patience;
-} Customer;
-
-typedef struct {
-	/* T		: QUEUE Customer
-	** HEAD		: yang akan keluar dahulu
-	** TAIL 	: yang masuk terakhir
-	** NBQueue	: jumlah antrian */
-	Customer *T;
-	int HEAD;
-	int TAIL;
-	int MaxEl;
-	} Queue;
-
 
 /*---------- PLAYER ----------*/
 #define MaxNameLength 20
