@@ -25,8 +25,6 @@ void NewCustomer (Customer * C) {
     } else {
         (*C).Persons = 4;
     }
-
-    (*C).TableIndex = 0; 
 };
 
 
