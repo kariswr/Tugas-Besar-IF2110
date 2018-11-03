@@ -31,4 +31,8 @@ void DelXAO (ArrOrder * AO, int X, Order * O);
 void PrintAO (ArrOrder AO);
 // Prints the contents of array as tuples of <"Dish", TableIndex>
 
+/* Debugging */
+void PrintAOWithIndex (ArrOrder AO);
+// Prints the index, and the contents of array as tuples
+
 #endif

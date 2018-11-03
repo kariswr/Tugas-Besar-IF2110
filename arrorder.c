@@ -5,25 +5,18 @@
 /*---------- ORDER ----------*/
 /* Constructor */
 void NewOrder (Order * O, int Idx) {
-    int x;
-    x = rand() % 8;
-    if (x == 0) {
-        (*O).DishKey = 'p';
-    } else if (x == 1) {
-        (*O).DishKey = 'q';
-    } else if (x == 2) {
-        (*O).DishKey = 'r';
-    } else if (x == 3) {
-        (*O).DishKey = 's';
-    } else if (x == 4) {
-        (*O).DishKey = 't';
-    } else if (x == 5) {
-        (*O).DishKey = 'u';
-    } else if (x == 6) {
-        (*O).DishKey = 'v';
-    } else if (x == 7) {
-        (*O).DishKey = 'w';
+    int x = rand() % 8;
+    switch (x) {
+        case 0: (*O).DishKey = 'p'; break;
+        case 1: (*O).DishKey = 'q'; break;
+        case 2: (*O).DishKey = 'r'; break;
+        case 3: (*O).DishKey = 's'; break;
+        case 4: (*O).DishKey = 't'; break;
+        case 5: (*O).DishKey = 'u'; break;
+        case 6: (*O).DishKey = 'v'; break;
+        case 7: (*O).DishKey = 'w'; break;
     }
+    printf("X = %d; C = %c\n", x, (*O).DishKey);
     (*O).TableIndex = Idx;
 };
 
@@ -74,9 +67,14 @@ void AddLastAO (ArrOrder * AO, Order O) {
 void DelXAO (ArrOrder * AO, int X, Order * O) {
     if (IsAOEmpty(*AO)) {
         printf("Order array is empty.\n");
-    } else {
+    } else if ((X > 0) && (X <= Neff(*AO))) {
         *O = ElmtA(*AO, X);
+        for (int i = X; i < Neff(*AO); i++) {
+            ElmtA(*AO, i) = ElmtA(*AO, i+1);
+        }
         Neff(*AO)--;
+    } else {
+        
     }
 };
 
@@ -88,14 +86,37 @@ void PrintAO (ArrOrder AO) {
     } else {
         for (int i = 1; i <= Neff(AO); i++) {
             switch (ElmtA(AO, i).DishKey) {
-                case 'p': printf("Banana Split");
-                case 'q': printf("Sundae");
-                case 'r': printf("Nasi Telur Dadar");
-                case 's': printf("Nasi Ayam Goreng");
-                case 't': printf("Burger");
-                case 'u': printf("Hot Dog");
-                case 'v': printf("Spaghetti Bolognese");
-                case 'w': printf("Spaghetti Carbonara");
+                case 'p': printf("Banana Split"); break;
+                case 'q': printf("Sundae"); break;
+                case 'r': printf("Nasi Telur Dadar"); break;
+                case 's': printf("Nasi Ayam Goreng"); break;
+                case 't': printf("Burger"); break;
+                case 'u': printf("Hot Dog"); break;
+                case 'v': printf("Spaghetti Bolognese"); break;
+                case 'w': printf("Spaghetti Carbonara"); break;
+            }
+            printf(", %d\n", ElmtA(AO, i).TableIndex);
+        }
+    }
+};
+
+/* Debugging */
+void PrintAOWithIndex (ArrOrder AO) {
+    printf("Order\n");
+    if (IsAOEmpty(AO)) {
+        printf("Empty array\n");
+    } else {
+        for (int i = 1; i <= Neff(AO); i++) {
+            printf("i = %d\n", i);
+            switch (ElmtA(AO, i).DishKey) {
+                case 'p': printf("Banana Split"); break;
+                case 'q': printf("Sundae"); break;
+                case 'r': printf("Nasi Telur Dadar"); break;
+                case 's': printf("Nasi Ayam Goreng"); break;
+                case 't': printf("Burger"); break;
+                case 'u': printf("Hot Dog"); break;
+                case 'v': printf("Spaghetti Bolognese"); break;
+                case 'w': printf("Spaghetti Carbonara"); break;
             }
             printf(", %d\n", ElmtA(AO, i).TableIndex);
         }
