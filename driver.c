@@ -83,7 +83,7 @@ int main() {
     DelXAO(&AO, 3, &O);
     DelXAO(&AO, 3, &O);
     PrintAOWithIndex(AO);
-    
+   
 
     return 0;
 }

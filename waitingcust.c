@@ -36,11 +36,11 @@ boolean IsQEmpty (Queue Q) {
 };
 
 boolean IsQFull (Queue Q) {
-    return (NBElmt(Q) == MaxEl(Q));
+    return (NBElmtQ(Q) == MaxEl(Q));
 };
 
 int NBElmtQ (Queue Q) {
-    if (IsEmpty(Q)) {
+    if (IsQEmpty(Q)) {
         return 0;
     } else {
         return (Tail(Q) - Head(Q) + 1);
@@ -61,7 +61,7 @@ void CreateEmptyQ (Queue * Q, int Max) {
 
 /* Add/Delete queue element */
 void AddQ (Queue * Q, Customer C) {
-    if (IsEmpty(*Q)) {
+    if (IsQEmpty(*Q)) {
         Head(*Q)++;
         Tail(*Q)++;
     } else {
@@ -71,14 +71,14 @@ void AddQ (Queue * Q, Customer C) {
 };
 
 void StarAddQ (Queue * Q, Customer C) {
-    if (IsEmpty(*Q)) {
+    if (IsQEmpty(*Q)) {
         Head(*Q)++;
         Tail(*Q)++;
         InfoHead(*Q) = C;
     } else {
         Tail(*Q)++;
         int i;
-        i = NBElmt(*Q);
+        i = NBElmtQ(*Q);
         while (((*Q).T[i-1].Star != true) && (i > 1)) {
             (*Q).T[i] = (*Q).T[i-1];
             i--;
@@ -93,7 +93,7 @@ void DelQ (Queue * Q, Customer * C) {
         Head(*Q) = 0;
         Tail(*Q) = 0;
     } else {
-        for (int i = 1; i <= NBElmt(*Q); i++) {
+        for (int i = 1; i <= NBElmtQ(*Q); i++) {
             (*Q).T[i] = (*Q).T[i+1];
         }
         Tail(*Q)--;
@@ -102,13 +102,13 @@ void DelQ (Queue * Q, Customer * C) {
 
 void DelXQ (Queue * Q, int X, Customer * C) {
     if (X == Head(*Q)) {
-        Del(Q, C);
+        DelQ(Q, C);
     } else if (X == Tail(*Q)) {
         *C = InfoTail(*Q);
         Tail(*Q)--;
     } else {
         *C = (*Q).T[X];
-        for (int i = X; i < NBElmt(*Q); i++) {
+        for (int i = X; i < NBElmtQ(*Q); i++) {
             (*Q).T[i] = (*Q).T[i+1];
         }
         Tail(*Q)--;
@@ -117,8 +117,8 @@ void DelXQ (Queue * Q, int X, Customer * C) {
 
 /* Queue changes after 1 tick */
 void LessPatient (Queue * Q) {
-    if (!IsEmpty(*Q)) {
-        for (int i = 1; i <= NBElmt(*Q); i++) {
+    if (!IsQEmpty(*Q)) {
+        for (int i = 1; i <= NBElmtQ(*Q); i++) {
             (*Q).T[i].Patience--;
         }
     }
@@ -126,10 +126,10 @@ void LessPatient (Queue * Q) {
 
 void CustomersLeave (Queue * Q) {
     Customer C;
-    if (!IsEmpty(*Q)) {
-        for (int i = 1; i <= NBElmt(*Q); i++) {
+    if (!IsQEmpty(*Q)) {
+        for (int i = 1; i <= NBElmtQ(*Q); i++) {
             if ((*Q).T[i].Patience == 0) {
-                DelX(Q, i, &C);
+                DelXQ(Q, i, &C);
                 i--;
                 //printf("A customer has left...\n");
             }
@@ -138,12 +138,12 @@ void CustomersLeave (Queue * Q) {
 }
 
 void InitiateQueue (Queue * Q) {
-    CreateEmpty(Q, MaxQueue);
+    CreateEmptyQ(Q, MaxQueue);
     Customer C;
     NewCustomer(&C);
     C.Star = false;
     C.Patience = 30;
-    Add(Q, C);
+    AddQ(Q, C);
 };
 
 void UpdateQueue (Queue * Q) {
@@ -157,15 +157,15 @@ void UpdateQueue (Queue * Q) {
     // Determines if a new customer is arriving
     x = rand() % 100;
     if (x >= 90) {
-        if (!IsFull(*Q)) {
+        if (!IsQFull(*Q)) {
             Customer C;
             NewCustomer(&C);
             if (C.Star == true) {
                 //printf("Incoming star customer!\n");
-                StarAdd(Q, C);
+                StarAddQ(Q, C);
             } else {
                 //printf("Incoming regular customer!\n");
-                Add(Q, C);
+                AddQ(Q, C);
             }
         } else {
             // If queue is full, no customers arrive
@@ -177,10 +177,10 @@ void UpdateQueue (Queue * Q) {
 
 /* Print queue */
 void PrintQueue (Queue Q) {
-    if (IsEmpty(Q)) {
+    if (IsQEmpty(Q)) {
         printf("Empty queue\n");
     } else {
-        for (int i = NBElmt(Q); i > 0; i--) {
+        for (int i = NBElmtQ(Q); i > 0; i--) {
             for (int j = 1; j <= Q.T[i].Persons; j++) {
                 if (Q.T[i].Star == true) {
                     printf("S");
