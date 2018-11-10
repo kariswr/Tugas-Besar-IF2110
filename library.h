@@ -114,7 +114,7 @@ typedef struct {
 
 
 /*---------- MATRIKS PETA ----------*/
-typedef char symbol[2];
+typedef char * symbol;
 
 #define M 8
 #define N 8
