@@ -182,8 +182,6 @@ typedef struct {
 } ArrOrder;
 
 /*---------- PLAYER ----------*/
-#define MaxNameLength 20
-
 typedef struct {
 	/* Name 	: nama player, maks 20 karakter
 	** Money	: uang player
@@ -191,7 +189,7 @@ typedef struct {
 	** Time 	: time ELAPSED sejak game dimulai
 	** Room		: nomor ruangan player currently berada
 	** Position : koordinat player di dalam ruang terkait */
-	char Name[MaxNameLength];
+	char * Name;
 	int Money;
 	int Life;
 	int Time;
