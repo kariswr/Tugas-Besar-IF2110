@@ -60,8 +60,10 @@ GRAPH?
 
 /*---------- POINT ----------*/
 typedef struct {
-    int X;
-    int Y;
+    /* i = Y
+    ** j = X */
+    int i;
+    int j;
 } Point;
 
 /*---------- QUEUE CUSTOMER ----------*/
@@ -207,8 +209,8 @@ extern char CC;
 extern boolean EOP;
 
 /*---------- SELEKTOR UNTUK ADT ----------*/
-#define Absis(Point)   (Point).X
-#define Ordinat(Point) (Point).Y
+#define Absis(Point)   (Point).j
+#define Ordinat(Point) (Point).i
 
 #define Neff(Array)	(Array).Neff
 #define T(Array)    (Array).T
