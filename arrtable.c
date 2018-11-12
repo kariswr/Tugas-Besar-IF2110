@@ -38,7 +38,7 @@ void ReadRoom (int Room, MapMatrix R, ArrTable * AT) {
             sscanf(ElmtM(R, i, j), "%d", &x);
             //printf("Scanning [%d][%d], found label '%d'.\n", i, j, x);
             if ((x > 0) && (x <= 12)) {
-                printf("Putting table in.\n");
+                //printf("Putting table in.\n");
                 Table T;
                 BuildTable(&T, Room, i, j, R);
                 AddTableX(AT, x, T);
