@@ -24,7 +24,7 @@ void AddTableX (ArrTable * AT, int X, Table T);
 // Adds a table to the array at index X
 
 /* Search through array */
-int PlayerIsNearTable (Player P, ArrTable AT);
+int TableNearPlayer (Player P, ArrTable AT);
 // Returns index of table closest to player; returns 0 if player is not near a table
 int FindEmptyTableFor (Player P, Customer C, ArrTable AT);
 // Returns index of empty table in the room; returns 0 if there are no empty tables

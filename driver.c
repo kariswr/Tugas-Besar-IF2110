@@ -85,7 +85,8 @@ int main() {
     DelXAO(&AO, 3, &O);
     PrintAOWithIndex(AO);
 */
-    /*---------- READING TABLES FROM MATRIX ----------*/
+
+/*---------- ARRTABLE AND STUFF ----------*/
     MapMatrix R1, R2, R3;
     R1.NBrsEff = 8;
     R2.NBrsEff = 8;
@@ -124,6 +125,27 @@ int main() {
     ArrTable AT;
     InitiateAT(R1, R2, R3, &AT);
     PrintAT(AT);
+
+    Player P;
+    P.Life = 0;
+    P.Money = 0;
+    P.Name = "Dummy";
+    P.Position.i = 1;
+    P.Position.j = 1;
+    P.Room = 1;
+    P.Time = 0;
+
+    Customer C;
+    C.Patience = 0;
+    C.Persons = 2;
+    C.Star = true;
+
+    int x;
+    int y;
+    x = TableNearPlayer(P, AT);
+    printf("Player is near Table %d.\n", x);
+    y = FindEmptyTableFor(P, C, AT);
+    printf("Table %d is available.\n", y);
 
     return 0;
 }

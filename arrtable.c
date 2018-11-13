@@ -15,7 +15,7 @@ void BuildTable (Table * T, int Room, int i, int j, MapMatrix R) {
     (*T).Occupied = false;
     
     //printf("(%d, %d) %s - ", (P.Y-1), P.X, ElmtM(R, (P.Y-1), P.X));
-    if (ElmtM(R, (P.i-1), P.j)[1] == 'X') {
+    if (ElmtM(R, (Ordinat(P)-1), Absis(P))[1] == 'X') {
         //printf("This table has capacity for 4 people\n");
         (*T).Capacity = 4;
     } else {
@@ -25,8 +25,8 @@ void BuildTable (Table * T, int Room, int i, int j, MapMatrix R) {
 };
 
 /* Tests */
-boolean IsUnoccupied (Table T) {
-    return (T.Occupied = false);
+boolean IsOccupied (Table T) {
+    return (T.Occupied);
 };
 
 /*---------- ARRAY OF TABLE ----------*/
@@ -61,9 +61,8 @@ void AddTableX (ArrTable * AT, int X, Table T) {
     Neff(*AT)++;
 };
 
-// NOT YET DEBUGGED
 /* Search through array */
-int PlayerIsNearTable (Player P, ArrTable AT) {
+int TableNearPlayer (Player P, ArrTable AT) {
     int Xdiff, Ydiff;
     int i;
     boolean Found;
@@ -108,13 +107,52 @@ int FindEmptyTableFor (Player P, Customer C, ArrTable AT) {
     i = 1;
     Found = false;
     while ((i <= Neff(AT)) && (!Found)) {
-        if ((ElmtA(AT, i).Room == P.Room) && (IsUnoccupied(ElmtA(AT, i)))) {
-            Found = true;
+        // Looking for matching seat number
+        //printf("Checking if Table %d is a perfect match.\n", i);
+        if (ElmtA(AT, i).Room == P.Room) {
+            if (!IsOccupied(ElmtA(AT, i))) {
+                if (ElmtA(AT, i).Capacity == C.Persons) {
+                    Found = true;
+                    //printf("Match found.\n");
+                } else {
+                    i++;
+                    //printf("Capacity unmatched.\n");
+                }
+            } else {
+                i++;
+                //printf("Table is occupied.\n");
+            }
         } else {
             i++;
+            //printf("Player and Table is not in the same room.\n");
         }
     }
 
+    if (!Found) {
+        i = 1;
+        while ((i <= Neff(AT)) && (!Found)) {
+            // Looking for matching seat number
+            //printf("Checking if Table %d is a perfect match.\n", i);
+            if (ElmtA(AT, i).Room == P.Room) {
+                if (!IsOccupied(ElmtA(AT, i))) {
+                    if (ElmtA(AT, i).Capacity == C.Persons) {
+                        Found = true;
+                        //printf("Match found.\n");
+                    } else {
+                        i++;
+                        //printf("Capacity unmatched.\n");
+                    }
+                } else {
+                    i++;
+                    //printf("Table is occupied.\n");
+                }
+            } else {
+                i++;
+                //printf("Player and Table is not in the same room.\n");
+            }
+        }
+    }
+        
     if (Found) {
         return i;
     } else {
