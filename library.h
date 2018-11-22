@@ -233,6 +233,6 @@ extern boolean EOP;
 
 #define Akar(addressNode) (addressNode)->info
 #define Left(addressNode) (addressNode)->left
-#define Right(addressNode) (addressNode)->righ
+#define Right(addressNode) (addressNode)->right
 
 #endif
