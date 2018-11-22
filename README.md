@@ -9,3 +9,6 @@ Credits:
 13517019 - <strong>Lydia Astrella Wiguna</strong></br>
 13517148 - <strong>Nando Rusrin Pratama</strong></br>
 13517142 - <strong>Saskia Imani</strong></br>
+
+
+<strong>NANDO NGEGAS!</strong>
