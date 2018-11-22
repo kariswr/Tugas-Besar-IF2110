@@ -162,6 +162,28 @@ typedef struct tNode {
 
 typedef addressNode FoodTree;
 
+/*---------- ARRAY KONVERSI MAKANAN ----------*/
+/*digunakan untuk menampilkan nama bahan makanan atau
+nama makanan jadi sesuai dengan code char*/
+
+#define MaxFood 24
+
+typedef struct {
+	/* FoodCode		: kata kunci bahan makanan atau makanan(a..w)
+	** FoodName		: nama bahan makanan atau makanan 
+	** FoodLength	: panjang karakter foodname*/
+	char FoodCode;
+	char FoodName[20];
+	int FoodLength;
+} Food;
+
+typedef struct { 
+	/* Array of Food	: Konversi kode ke nama makanan
+	** Neff				: Banyaknya jenis bahan makanan atau makanan jadi */
+	Food T[MaxFood+1];
+	int Neff;
+} ArrFood;
+
 /*---------- ARRAY ORDER ----------*/
 #define MaxOrder 8
 
@@ -205,6 +227,16 @@ typedef struct {
 /* State Mesin */
 extern char CC;
 extern boolean EOP;
+
+/*--------MESIN KATA---------*/
+#define NMax 50
+#define BLANK ' '
+
+typedef struct {
+	/* container penyimpan kata, indeks yang dipakai [1..NMax] */
+	char TabKata[NMax+1];
+    int Length;
+} Kata;
 
 /*---------- SELEKTOR UNTUK ADT ----------*/
 #define Absis(Point)   (Point).X
