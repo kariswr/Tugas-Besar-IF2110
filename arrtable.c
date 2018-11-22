@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "arrtable.h"
+#include "arrorder.h"
 
 /*---------- TABLE ----------*/
 /* Constructor */
@@ -132,10 +133,10 @@ int FindEmptyTableFor (Player P, Customer C, ArrTable AT) {
         i = 1;
         while ((i <= Neff(AT)) && (!Found)) {
             // Looking for matching seat number
-            //printf("Checking if Table %d is a perfect match.\n", i);
+            //printf("Checking if Table %d is a match.\n", i);
             if (ElmtA(AT, i).Room == P.Room) {
                 if (!IsOccupied(ElmtA(AT, i))) {
-                    if (ElmtA(AT, i).Capacity == C.Persons) {
+                    if (ElmtA(AT, i).Capacity >= C.Persons) {
                         Found = true;
                         //printf("Match found.\n");
                     } else {
@@ -160,10 +161,50 @@ int FindEmptyTableFor (Player P, Customer C, ArrTable AT) {
     }
 };
 
+/* Determining what happens to array after 1 tick */
+void LessPatientAT (ArrTable * AT) {
+    for (int i = 1; i <= Neff(*AT); i++) {
+        ElmtA(*AT, i).Cust.Patience--;
+    }
+};
+
+void CustomersLeaveAT (ArrTable * AT, ArrOrder * AO, int * leavingCusts) {
+    int counter;
+    counter = 0;
+    for (int i = 1; i <= Neff(*AT); i++) {
+        if (ElmtA(*AT, i).Cust.Patience == 0) {
+            ElmtA(*AT, i).Occupied = false;
+            int AOIdx;
+            AOIdx = SearchAO(*AO, i);
+            if (AOIdx != 0) {
+                //printf("Table %d has ordered.\n", i);
+                Order O;
+                DelXAO(AO, AOIdx, &O);
+                //printf("Table %d has been removed from Order list.\n", O.TableIndex);
+            }
+            counter++;
+            //printf("A customer has left...\n");
+        }
+    }
+    *leavingCusts = counter;
+};
+
+void UpdateAT (ArrTable * AT, ArrOrder * AO, int * leavingCusts) {
+    // Decrease patience of all customers
+    LessPatientAT(AT);
+    // Removes customers with patience = 0
+    CustomersLeaveAT(AT, AO, leavingCusts);
+};
+
+
 /* Debugging */
 void PrintAT (ArrTable AT) {
     for (int i = 1; i <= Neff(AT); i++) {
-        printf("[%d] %d - (%d, %d) | %d | %d\n", i, ElmtA(AT, i).Room, ElmtA(AT, i).Position.i, ElmtA(AT, i).Position.j, ElmtA(AT, i).Capacity, ElmtA(AT, i).Occupied);
+        printf("[%d] %d - (%d, %d) | %d | %d ", i, ElmtA(AT, i).Room, ElmtA(AT, i).Position.i, ElmtA(AT, i).Position.j, ElmtA(AT, i).Capacity, ElmtA(AT, i).Occupied);
+        if (IsOccupied(ElmtA(AT, i))) {
+            printf("(%d)", ElmtA(AT, i).Cust.Patience);
+        }
+        printf("\n");
     }
 };
 

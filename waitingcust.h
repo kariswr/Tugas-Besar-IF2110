@@ -32,13 +32,13 @@ void DelXQ (Queue * Q, int X, Customer * C);
 // Deletes X-th element
 
 /* Queue changes after 1 tick */
-void LessPatient (Queue * Q);
+void LessPatientQ (Queue * Q);
 // Decreases patience of all customers in the queue
-void CustomersLeave (Queue *Q);
-// Detects and deletes customers with patience = 0
+void CustomersLeaveQ (Queue *Q, int * leavingCusts);
+// Detects and deletes customers with patience = 0; returns number of leaving customers
 void InitiateQueue (Queue * Q);
 // Determines state of queue during start of game
-void UpdateQueue (Queue * Q);
+void UpdateQueue (Queue * Q, int * leavingCusts);
 /* Collection of changes made after 1 tick:
     - LessPatient
     - CustomersLeave

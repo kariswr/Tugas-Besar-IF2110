@@ -35,13 +35,13 @@ boolean IsAOFull (ArrOrder AO) {
     return (Neff(AO) == MaxOrder);
 };
 
-int SearchAO (ArrOrder AO, char DishKey, int TableIndex) {
+int SearchAO (ArrOrder AO, int TableIndex) {
     int i;
     boolean Found;
     i = 1;
     Found = false;
     while ((i <= Neff(AO)) && (!Found)) {
-        if ((ElmtA(AO, i).DishKey == DishKey) && (ElmtA(AO, i).TableIndex == TableIndex)) {
+        if (ElmtA(AO, i).TableIndex == TableIndex) {
             Found = true;
         } else {
             i++;
@@ -53,17 +53,6 @@ int SearchAO (ArrOrder AO, char DishKey, int TableIndex) {
         return 0;
     }
 };
-
-boolean HasOrdered (ArrOrder AO, int TableIndex) {
-    boolean Found;
-    Found = false;
-    for (int i = 1; i <= Neff(AO); i++) {
-        if ((ElmtA(AO, i).TableIndex == TableIndex)) {
-            Found = true;
-        }
-    }
-    return Found;
-}
 
 /* Add/Delete array elements */
 void AddLastAO (ArrOrder * AO, Order O) {
@@ -77,9 +66,10 @@ void AddLastAO (ArrOrder * AO, Order O) {
 
 void DelXAO (ArrOrder * AO, int X, Order * O) {
     if (IsAOEmpty(*AO)) {
-        printf("Order array is empty.\n");
+        //printf("Order array is already empty.\n");
     } else if ((X > 0) && (X <= Neff(*AO))) {
         *O = ElmtA(*AO, X);
+        //printf("Removing order from table %d\n", (*O).TableIndex);
         for (int i = X; i < Neff(*AO); i++) {
             ElmtA(*AO, i) = ElmtA(*AO, i+1);
         }
@@ -91,9 +81,9 @@ void DelXAO (ArrOrder * AO, int X, Order * O) {
 
 /* Print array of order */
 void PrintAO (ArrOrder AO) {
-    printf("Order\n");
+    printf("ORDER\n");
     if (IsAOEmpty(AO)) {
-        printf("Empty array\n");
+        //printf("Empty array\n");
     } else {
         for (int i = 1; i <= Neff(AO); i++) {
             switch (ElmtA(AO, i).DishKey) {

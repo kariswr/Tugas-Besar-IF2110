@@ -116,7 +116,7 @@ void DelXQ (Queue * Q, int X, Customer * C) {
 }
 
 /* Queue changes after 1 tick */
-void LessPatient (Queue * Q) {
+void LessPatientQ (Queue * Q) {
     if (!IsQEmpty(*Q)) {
         for (int i = 1; i <= NBElmtQ(*Q); i++) {
             (*Q).T[i].Patience--;
@@ -124,17 +124,21 @@ void LessPatient (Queue * Q) {
     }
 };
 
-void CustomersLeave (Queue * Q) {
+void CustomersLeaveQ (Queue * Q, int * leavingCusts) {
     Customer C;
+    int counter;
+    counter = 0;
     if (!IsQEmpty(*Q)) {
         for (int i = 1; i <= NBElmtQ(*Q); i++) {
             if ((*Q).T[i].Patience == 0) {
                 DelXQ(Q, i, &C);
                 i--;
+                counter++;
                 //printf("A customer has left...\n");
             }
         }
     }
+    *leavingCusts = counter;
 }
 
 void InitiateQueue (Queue * Q) {
@@ -146,13 +150,15 @@ void InitiateQueue (Queue * Q) {
     AddQ(Q, C);
 };
 
-void UpdateQueue (Queue * Q) {
-    int x;
+void UpdateQueue (Queue * Q, int * leavingCusts) {
+    int x, y;
 
     // Decrease patience of all customers
-    LessPatient(Q);
+    LessPatientQ(Q);
     // Removes customers with patience = 0
-    CustomersLeave(Q);
+    CustomersLeaveQ(Q, &y);
+    *leavingCusts = y;
+    //printf("%d lives have been lost\n", y);
 
     // Determines if a new customer is arriving
     x = rand() % 100;
@@ -177,6 +183,7 @@ void UpdateQueue (Queue * Q) {
 
 /* Print queue */
 void PrintQueue (Queue Q) {
+    printf("WAITING LINE\n");
     if (IsQEmpty(Q)) {
         printf("Empty queue\n");
     } else {

@@ -29,6 +29,11 @@ int TableNearPlayer (Player P, ArrTable AT);
 int FindEmptyTableFor (Player P, Customer C, ArrTable AT);
 // Returns index of empty table in the room; returns 0 if there are no empty tables
 
+/* Determine what happens after 1 tick */
+void LessPatientAT (ArrTable * AT);
+void CustomersLeave (ArrTable * AT, ArrOrder * AO, int * leavingCusts);
+void UpdateAT (ArrTable * AT, ArrOrder * AO, int * leavingCusts);
+
 /* Debugging */
 void PrintAT (ArrTable);
 // Prints the values inside array with the format
