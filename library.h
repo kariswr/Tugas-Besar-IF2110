@@ -60,8 +60,10 @@ GRAPH?
 
 /*---------- POINT ----------*/
 typedef struct {
-    int X;
-    int Y;
+    /* i = Y
+    ** j = X */
+    int i;
+    int j;
 } Point;
 
 /*---------- QUEUE CUSTOMER ----------*/
@@ -114,7 +116,7 @@ typedef struct {
 
 
 /*---------- MATRIKS PETA ----------*/
-typedef char symbol[2];
+typedef char * symbol;
 
 #define M 8
 #define N 8
@@ -180,8 +182,6 @@ typedef struct {
 } ArrOrder;
 
 /*---------- PLAYER ----------*/
-#define MaxNameLength 20
-
 typedef struct {
 	/* Name 	: nama player, maks 20 karakter
 	** Money	: uang player
@@ -189,7 +189,7 @@ typedef struct {
 	** Time 	: time ELAPSED sejak game dimulai
 	** Room		: nomor ruangan player currently berada
 	** Position : koordinat player di dalam ruang terkait */
-	char Name[MaxNameLength];
+	char * Name;
 	int Money;
 	int Life;
 	int Time;
@@ -207,8 +207,8 @@ extern char CC;
 extern boolean EOP;
 
 /*---------- SELEKTOR UNTUK ADT ----------*/
-#define Absis(Point)   (Point).X
-#define Ordinat(Point) (Point).Y
+#define Absis(Point)   (Point).j
+#define Ordinat(Point) (Point).i
 
 #define Neff(Array)	(Array).Neff
 #define T(Array)    (Array).T
