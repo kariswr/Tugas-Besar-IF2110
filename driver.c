@@ -5,6 +5,14 @@
 #include <stdlib.h>
 #include <time.h>
 
+/*---------- COMMANDS ----------*/
+void TickPt1 (Queue * Q, ArrTable * AT, ArrOrder * AO, int * LivesLost);
+// Updates queue and arrays after 1 tick. Counts how many lives are lost during update.
+void PLACE (Queue * Q, ArrTable * AT, ArrOrder * AO, int * LivesLost, Player P);
+// Places a customer from the queue to the array of tables
+void ORDER (Queue * Q, ArrTable * AT, ArrOrder * AO, int * LivesLost, Player P);
+// Takes order from an occupied table
+
 int main() {
 
 /*---------- ADDING AND DELETING A CUSTOMER ---------- 
@@ -228,49 +236,27 @@ int main() {
     char command;
     scanf("%c", &command);
     while (command != 'q') {
-        // *** PLACE ***
+        n = 0;
         if (command == 'p') {
-            if (!IsQEmpty(Q)) {
-                int x;
-                int i;
-                i = 1;
-                //printf("Finding table for Customer %d.\n", i);
-                //printf("NeffAT = %d\n", Neff(AT));
-                x = FindEmptyTableFor(P, Q.T[i], AT);
-                //printf("Table %d is available.\n", x);
-                while ((x == 0) && (i <= NBElmtQ(Q))) {
-                    x = FindEmptyTableFor(P, Q.T[i], AT);
-                    if (x == 0) {
-                        i++;
-                    }
-                }
-                
-                if (x != 0) {
-                    Customer C;
-                    DelXQ(&Q, i, &C);
-                    AT.T[x].Cust = C;
-                    AT.T[x].Occupied = true;
-                    AT.T[x].Cust.Patience += AddPatience;
-                    //printf("Table %d has %d customers.\n", x, AT.T[x].Cust.Persons);
-                }
-            }
-        }
-        // *** ORDER ***
-        if (command == 'o') {
-            int x;
-            Order O;
-            x = TableNearPlayer(P, AT);
-            if ((ElmtA(AT, x).Occupied) && (SearchAO(AO, x) == 0)) {
-                NewOrder(&O, x);
-                AddLastAO(&AO, O);
-            }
-        }
-        // *** NEXT TICK ***
-        if (command == 'n') {
-            P.Time++;
-            UpdateQueue(&Q, &n);
+            PLACE(&Q, &AT, &AO, &n, P);
             livesLost += n;
-            UpdateAT(&AT, &AO, &n);
+            printf("Time = %d\n", P.Time);
+            printf("Lives Lost = %d\n\n", livesLost);
+            PrintQueue(Q); printf("\n");
+            PrintAO(AO); printf("\n");
+            PrintAT(AT); printf("\n");
+        }
+        if (command == 'o') {
+            ORDER(&Q, &AT, &AO, &n, P);
+            livesLost += n;
+            printf("Time = %d\n", P.Time);
+            printf("Lives Lost = %d\n\n", livesLost);
+            PrintQueue(Q); printf("\n");
+            PrintAO(AO); printf("\n");
+            PrintAT(AT); printf("\n");
+        }
+        if (command == 'n') {
+            TickPt1(&Q, &AT, &AO, &n);
             livesLost += n;
             printf("Time = %d\n", P.Time);
             printf("Lives Lost = %d\n\n", livesLost);
@@ -281,6 +267,55 @@ int main() {
         scanf("%c", &command);
     }
 
-
     return 0;
+}
+
+/*---------- COMMANDS ----------*/
+void TickPt1 (Queue * Q, ArrTable * AT, ArrOrder * AO, int * LivesLost) {
+    int x, lives;
+    lives = 0;
+    UpdateQueue(Q, &x);
+    lives += x;
+    UpdateAT(AT, AO, &x);
+    lives += x;
+    *LivesLost = lives;
+}
+
+void PLACE (Queue * Q, ArrTable * AT, ArrOrder * AO, int * LivesLost, Player P) {
+    if (!IsQEmpty(*Q)) {
+        int x;
+        int i;
+        i = 1;
+        //printf("Finding table for Customer %d.\n", i);
+        //printf("NeffAT = %d\n", Neff(AT));
+        x = FindEmptyTableFor(P, (*Q).T[i], *AT);
+        //printf("Table %d is available.\n", x);
+        while ((x == 0) && (i <= NBElmtQ(*Q))) {
+            x = FindEmptyTableFor(P, (*Q).T[i], *AT);
+            if (x == 0) {
+                i++;
+            }
+        }
+        
+        if (x != 0) {
+            Customer C;
+            DelXQ(Q, i, &C);
+            ElmtA(*AT, x).Cust = C;
+            ElmtA(*AT, x).Occupied = true;
+            ElmtA(*AT, x).Cust.Patience += AddPatience;
+            //printf("Table %d has %d customers.\n", x, AT.T[x].Cust.Persons);
+        }
+        TickPt1(Q, AT, AO, LivesLost);
+    }
+}
+
+void ORDER (Queue * Q, ArrTable * AT, ArrOrder * AO, int * LivesLost, Player P) {
+    int x;
+    Order O;
+    x = TableNearPlayer(P, *AT);
+    if ((ElmtA(*AT, x).Occupied) && (SearchAO(*AO, x) == 0)) {
+        NewOrder(&O, x);
+        AddLastAO(AO, O);
+        TickPt1(Q, AT, AO, LivesLost);
+    }
 }

@@ -185,7 +185,7 @@ void UpdateQueue (Queue * Q, int * leavingCusts) {
 void PrintQueue (Queue Q) {
     printf("WAITING LINE\n");
     if (IsQEmpty(Q)) {
-        printf("Empty queue\n");
+        //printf("Empty queue\n");
     } else {
         for (int i = NBElmtQ(Q); i > 0; i--) {
             for (int j = 1; j <= Q.T[i].Persons; j++) {

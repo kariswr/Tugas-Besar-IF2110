@@ -100,7 +100,6 @@ int TableNearPlayer (Player P, ArrTable AT) {
     }
 };
 
-// NOT YET DEBUGGED
 int FindEmptyTableFor (Player P, Customer C, ArrTable AT) {
     int i;
     boolean Found;
