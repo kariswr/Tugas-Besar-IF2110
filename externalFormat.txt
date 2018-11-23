@@ -1,0 +1,45 @@
+Queue
+
+
+ArrTable
+<Neff_Table>
+
+Table
+<capacity(1)> <room(1)> <p_x(1)> <p_y(1)> <occupied(1)> (<cust_VIP(1)> <cust_Person(1)> <cust_Patience(1)>)
+<capacity(2)> <room(2)> <p_x(2)> <p_y(2)> <occupied(2)> (<cust_VIP(2)> <cust_Person(2)> <cust_Patience(2)>)
+.
+.
+.
+<capacity(n)> <room(n)> <p_x(n)> <p_y(n)> <occupied(n)> (<cust_VIP(n) <cust_Person(n)> <cust_Patience(n)>>)
+
+ArrOrder
+<Neff_Order>
+
+Order
+<dish_key(1)> <tableindeks(1)>
+<dish_key(2)> <tableindeks(2)>
+.
+.
+.
+<dish_key(Neff)> <tableindeks(Neff)>
+
+Status Player
+<name> <money> <life> <time> <room> <p_x> <p_y>
+
+Tray
+<TOP>
+<item(1)>
+<item(2)>
+.
+.
+.
+<item(n)>
+
+Hand
+<TOP>
+<item(1)>
+<item(2)>
+.
+.
+.
+<item(n)>
