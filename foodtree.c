@@ -22,6 +22,8 @@ void BuildTree (FoodTree *P){
 ADV();
 if (CC==')'){ /* Basis : pohon kosong */
 	(*P)=Nil;
+// }if(CC=='('){
+// 	BuildTree(P);
 }else{ /*Rekurens 2*/
 	AlokasiTree(P);
 	Akar(*P)=CC;
@@ -113,55 +115,68 @@ if (!IsTreeEmpty(P) && !IsTreeOneElmt(P)){
 }
 }
 
-void ShowFoodTree (FoodTree P ,ArrFood F,int strip,int *jumlahkar){
-/*I.S. P terdefinisi
-  F.S. P ditampilkan di layar pengguna sudah dalam bentuk string nama makanan beserta kodenya*/
-/*Kamus lokal*/
- int i;
- int spasi;
- /*Algoritma*/
- if (!IsTreeEmpty(P)){
-	printf("(%c)",Akar(P));
-	i=SearchFoodName(F,Akar(P));
-	PrintFoodName(F,F.T[i].FoodCode);
-	spasi = 7-F.T[i].FoodLength;
-	while(spasi >0){
-		printf(" ");
-		spasi--;
-	}
- 	if (!IsTreeOneElmt(P)){
- 		if(IsUnerLeft(P)){
- 			for(i=1;i<=strip;i++){
- 				printf("-");
- 			}
-			*jumlahkar+=(strip+10);
- 			ShowFoodTree(Left(P),F,strip,jumlahkar);
- 		}else if(IsUnerRight(P)){
+
+void PrintTree(FoodTree P, ArrFood F, int h){
+/* I.S. P dan F terdefinisi, h adalah jarak indentasi (spasi) DIISI 5 !!! */
+/* F.S. Semua simpul P sudah ditulis dengan indentasi (spasi) */
+/* Penulisan akar selalu pada baris baru (diakhiri newline) */
+/* Contoh, jika h = 2: 
+1) Pohon preorder: (A()()) akan ditulis sbb:
+A
+2) Pohon preorder: (A(B()())(C()())) akan ditulis sbb:
+A
+  B
+  C
+3) Pohon preorder: (A(B(D()())())(C()(E()()))) akan ditulis sbb:
+A
+  B
+    D
+  C
+    E
+*/
+	/*Kamus lokal*/
+	int i;
+	/*ALgortima*/
+	if (!IsTreeEmpty(P)) {
+		if (IsTreeOneElmt(P)) {
+			printf("(%c) ", Akar(P));
+			i=SearchFoodName(F,Akar(P));
+			PrintFoodName(F,F.T[i].FoodCode);
 			printf("\n");
-			for(i=1;i<=(*jumlahkar-3);i++){
+		} else 
+		if (IsUnerLeft(P)){
+			printf("(%c) ", Akar(P));
+			i=SearchFoodName(F,Akar(P));
+			PrintFoodName(F,F.T[i].FoodCode);
+			printf("\n");
+			for (i=1; i<=h; i++) {
 				printf(" ");
 			}
-			for(i=1;i<=strip;i++){
-				printf("-");
-			}
-			ShowFoodTree(Right(P),F,strip,jumlahkar);
-			*jumlahkar-=(strip+10);
-		}else{ /*IsBiner(P)*/
-			for(i=1;i<=strip;i++){
- 				printf("-");
- 			}
-			*jumlahkar+=(strip+10);
- 			ShowFoodTree(Left(P),F,strip,jumlahkar);
+			PrintTree(Left(P),F,h+5);	
+		} else 
+		if (IsUnerRight(P)){
+			printf("(%c) ", Akar(P));
+			i=SearchFoodName(F,Akar(P));
+			PrintFoodName(F,F.T[i].FoodCode);
 			printf("\n");
-			for(i=1;i<=(*jumlahkar-3);i++){
+			for (i=1; i <=h; i++) {
 				printf(" ");
 			}
-			for(i=1;i<=strip;i++){
-				printf("-");
-			}
-			ShowFoodTree(Right(P),F,strip,jumlahkar);
-			*jumlahkar -=(strip+10);
+			PrintTree(Right(P),F, h+5);
+		} else {
+			printf("(%c) ", Akar(P));
+			i=SearchFoodName(F,Akar(P));
+			PrintFoodName(F,F.T[i].FoodCode);
+			printf("\n");
+                for (i = 1; i<=h; i++){
+                    printf(" ");
+                }
+                PrintTree(Left(P),F,h+5);
+                for (i = 1; i<=h; i++){
+                    printf(" ");
+                }
+                PrintTree(Right(P),F,h+5);
 		}
- 	}
- }
- }
+	}
+}
+
