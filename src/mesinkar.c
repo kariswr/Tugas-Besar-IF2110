@@ -1,63 +1,23 @@
-/* File: mesinkar.c */
-/* Implementasi Mesin Karakter */
-
-#include "mesinkar.h"
 #include <stdio.h>
+#include "boolean.h"
+#include "mesinkar.h"
 
-char CC, CCommand;
+
+char CC;
 boolean EOP;
 
-static FILE * pita;
+static FILE *pita;
 static int retval;
 
-void START() {
-/* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
-   Karakter pertama yang ada pada pita posisinya adalah pada jendela.
-   I.S. : sembarang
-   F.S. : CC adalah karakter pertama pada pita. Jika CC != MARK maka EOP akan padam (false).
-          Jika CC = MARK maka EOP akan menyala (true) */
-
-	/* Algoritma */
-	pita = fopen("pitakar.txt","r");
+void START(){
+	pita = fopen("identity.txt","r");
 	ADV();
 }
 
-void ADV() {
-/* Pita dimajukan satu karakter. 
-   I.S. : Karakter pada jendela = 
-          CC, CC != MARK
-   F.S. : CC adalah karakter berikutnya dari CC yang lama, 
-          CC mungkin = MARK.
-		  Jika  CC = MARK maka EOP akan menyala (true) */
-
-	/* Algoritma */
+void ADV(){
 	retval = fscanf(pita,"%c",&CC);
 	EOP = (CC == MARK);
 	if (EOP){
-    fclose(pita);
- 	}
-}
-
-void STARTCommand()
-/* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
-   Karakter pertama yang ada pada pita posisinya adalah pada jendela.
-   I.S. : sembarang
-   F.S. : CCommand adalah karakter pertama pada pita. Jika CCommand != MARK maka EOP akan padam (false).
-          Jika CCommand = MARK maka EOP akan menyala (true) */
-{
-  /* Algoritma */
-  ADVCommand();
-}
-
-void ADVCommand()
-/*Pita dimajukan satu karakter. 
-  I.S. : Karakter pada jendela = 
-          CCommand, CCommand != MARK
-  F.S. : CCommand adalah karakter berikutnya dari CCommand yang lama, 
-          CCommand mungkin = MARK.
-  Jika CCommand = MARK maka EOP akan menyala (true) */
-{
-  /* Algoritma */
-  retval = scanf("%c",&CCommand);
-  EOP = (CCommand == MARK);
+		fclose(pita);
+	}
 }

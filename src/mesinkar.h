@@ -1,15 +1,14 @@
 /* File: mesinkar.h */
 /* Definisi Mesin Karakter */
 
-#ifndef __MESIN_KAR_H_
-#define __MESIN_KAR_H_
+#ifndef MESIN_KAR_H
+#define MESIN_KAR_H
 
 #include "boolean.h"
 
-#define MARK '\n'
+#define MARK '/'
 /* State Mesin */
 extern char CC;
-extern char CCommand;
 extern boolean EOP;
 
 void START();
@@ -26,20 +25,5 @@ void ADV();
    F.S. : CC adalah karakter berikutnya dari CC yang lama, 
           CC mungkin = MARK
           Jika  CC = MARK maka EOP akan menyala (true) */
-
-void STARTCommand();
-/* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
-   Karakter pertama yang ada pada pita posisinya adalah pada jendela.
-   I.S. : sembarang
-   F.S. : CCommand adalah karakter pertama pada pita. Jika CCommand != MARK maka EOP akan padam (false).
-          Jika CCommand = MARK maka EOP akan menyala (true) */
-
-void ADVCommand();
-/*Pita dimajukan satu karakter. 
-  I.S. : Karakter pada jendela = 
-          CCommand, CCommand != MARK
-  F.S. : CCommand adalah karakter berikutnya dari CCommand yang lama, 
-          CCommand mungkin = MARK.
-  Jika CCommand = MARK maka EOP akan menyala (true) */
 
 #endif
