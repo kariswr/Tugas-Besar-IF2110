@@ -43,12 +43,22 @@ typedef struct tNode {
 } Node;
 typedef address BinTree;
 -------MESIN KARAKTER-------
-#define MARK '.'
-// State Mesin 
+typedef struct {
+	char TabKata[NMax + 1];
+	int Length;
+} Kata;
+#define MARK '/'
+#define NMax 50
+#define BLANK ' '
+#define ENTER '\n'
+
 extern char CC;
 extern boolean EOP;
+
+extern boolean EndKata;
+extern Kata CKata;
+
 JAM?
-MESIN KATA?
 MULTILIST?
 GRAPH?
 */
@@ -219,23 +229,15 @@ typedef struct {
 	Point Position;
 } Player;
 
-/*-------MESIN KARAKTER-------*/
-/*Silakan modifikasi procedure START pada ADT mesinkar bergantung pada nama file txt*/
-/*Contoh: procedure STARTTREE untuk membaca file foodtree*/
-
-#define MARK '.'
-/* State Mesin */
-extern char CC;
-extern boolean EOP;
-
-/*--------MESIN KATA---------*/
+/*-------IO MACHINE-------*/
+#define MARK '/'
 #define NMax 50
 #define BLANK ' '
+#define ENTER '\n'
 
 typedef struct {
-	/* container penyimpan kata, indeks yang dipakai [1..NMax] */
-	char TabKata[NMax+1];
-    int Length;
+	char TabKata[NMax + 1];
+	int Length;
 } Kata;
 
 /*---------- SELEKTOR UNTUK ADT ----------*/
