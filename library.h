@@ -252,12 +252,12 @@ typedef struct {
 #define MaxUser 9
 
 typedef struct {
-	char TabWord[NMax + 1];
+	char TabKata[NMax + 1];
 	int Length;
-} Word;
+} Kata;
 
 typedef struct {
-	Word UserThumb[MaxUser + 1];
+	Kata UserThumb[MaxUser + 1];
 	int Length;
 } ArrThumb
 

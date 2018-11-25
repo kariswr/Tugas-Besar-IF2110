@@ -2,12 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include "IOmachine.h"
+#include "library.h"
+#include "waitingcust.h"
+#include "handtray.h"
 
 static FILE *pita;
 static int retval;
 
-boolean EndWord;
-Word CWord;
+boolean EndKata;
+Kata CKata;
 
 char CC;
 boolean EOP;
@@ -54,10 +57,10 @@ void STARTKATA(char n){
 void ADVKATA(){
 	IgnoreBlank();
 	if (CC == MARK){
-		EndWord = true;
+		EndKata = true;
 	}
 	else{
-		EndWord = false;
+		EndKata = false;
 		SalinKata();
 	}
 }
@@ -66,13 +69,13 @@ void SalinKata(){
 	int i = 1;
 	do{
 		if (i <= NMax){
-			CWord.TabWord[i] = CC;
+			CWord.TabKata[i] = CC;
 			i = i + 1;
 		}
 		ADV();
 	} while (!(CC == MARK || CC == BLANK || CC == ENTER));
 	i = i - 1;
-	CWord.Length = i;
+	CKata.Length = i;
 }
 
 /******** READ THUMBNAIL DATA ********/
@@ -98,12 +101,12 @@ void ReadThumbFile(ArrThumb *ArrTh){
 			for (j = 1; j <= int_count; j++){
 				for (int i = 1; i <= CWord.Length; i++){
 					/** Save the thumbnails to the array **/
-					(*ArrTh).UserThumb[j].TabWord[i] = CWord.TabWord[i];
+					(*ArrTh).UserThumb[j].TabKata[i] = CKata.TabKata[i];
 
-					printf("%d. %c", j, CWord.TabWord[i]);
+					printf("%d. %c", j, CKata.TabKata[i]);
 				}
 				/** Save the length of the username **/
-				(*ArrTh).UserThumb[j].Length = CWord.Length;
+				(*ArrTh).UserThumb[j].Length = CKata.Length;
 				printf("\n");
 			}
 		}
@@ -113,34 +116,180 @@ void ReadThumbFile(ArrThumb *ArrTh){
 /******** WRITE THUMBNAIL DATA********/
 void WriteThumbFile(ArrThumb ArrTh, char *Name){
 	int i;
-
-
-	
-
 }
 
 /******** READ DATA FROM FILE ********/
-int ConvertCharInt(Word W){
+int ConvertCharInt(Kata K){
 	char *c_Temp;
 	int lenTemp;
 
-	lenTemp = W.Length;
+	lenTemp = K.Length;
 	c_Temp = (char *) malloc ((lenTemp + 1) *sizeof(char));
-	c_Temp = W.TabWord;
+	c_Temp = K.TabKata;
 
 	return atoi(&c_Temp[1]);
+}
+
+boolean ConvertCharBool(Kata K){
+	return (K.TabKata[1] == '1');
 }
 
 void ReadFileExt(Queue *Q, ArrTable *ArrT, ArrOrder *ArrO, Player *P, Stack *Tray, Stack *Hand){
 	STARTKATA('1');
 	/**** QUEUE ****/
-	Head(*Q) = ConvertCharInt(CWord);
+	Head(*Q) = ConvertCharInt(CKata);
 	ADVKATA();
-	Tail(*Q) = ConvertCharInt(CWord);
+	Tail(*Q) = ConvertCharInt(CKata);
 	ADVKATA();
-	MaxEl(*Q) = ConvertCharInt(CWord);
-	/**** ARRTABLE ****/
+	MaxEl(*Q) = ConvertCharInt(CKata);
 
+	/** ALOCATE the MEMORY **/
+	CreateEmptyQ(Q, MaxQueue);
+	int i;
+
+	/** Temporary Customer DATA TYPE **/
+	Customer tempCust;
+	int temp;
+
+	for (i = 1; i <= MaxEl(*Q); i++){
+		/** VIP **/
+		ADVKATA();
+		tempCust.Star = ConvertCharBool(CKata);
+		
+		/** PERSONS **/
+		ADVKATA();
+		temp = ConvertCharInt(CKata);
+		tempCust.Persons = temp;
+
+		/** PATIENCE **/
+		ADVKATA();
+		temp = ConvertCharInt(CKata);
+		tempCust.Patience = temp;
+
+		AddQ(Q, tempCust);
+	}
+
+	/**** ARRTABLE ****/
+	ADVKATA();
+	int NeffTable = ConvertCharInt(CKata);
+	Neff(*ArrT) = NeffTable;
+
+	for (i = 1; i <= NTable; i++){
+		/** CAPACITY **/
+		ADVKATA();
+		temp = ConvertCharInt(CKata);
+		ElmtA(*ArrT, i).Capacity = temp;
+
+		/** ROOM **/
+		ADVKATA();
+		temp = ConvertCharInt(CKata);
+		ElmtA(*ArrT, i).Room = temp;
+
+		/** POINT **/
+			/* ABSIS */
+			ADVKATA();
+			temp = ConvertCharInt(CKata);
+			Absis(ElmtA(*ArrT, i).Position) = temp;
+
+			/* ORDINAT */
+			ADVKATA();
+			temp = ConvertCharInt(CKata);
+			Ordinat(ElmtA(*ArrT, i).Position) = temp;
+		
+		/** IS OCCUPIED? **/
+		ADVKATA();
+		temp = ConvertCharBool(CKata);
+		ElmtA(*ArrT, i).Occupied = temp;
+
+		/** CUSTOMER **/
+			/* VIP */
+			ADVKATA();
+			temp = ConvertCharBool(CKata);
+			ElmtA(*ArrT, i).Cust.Star = temp;
+
+			/* PERSONS */
+			ADVKATA();
+			temp = ConvertCharInt(CKata);
+			ElmtA(*ArrT, i).Cust.Star = temp;
+
+			/* PATIENCE */
+			ADVKATA();
+			temp = ConvertCharInt(CKata);
+			ElmtA(*ArrT, i).Cust.Patience = temp;
+	}
+
+	/**** ARRORDER ****/
+	MakeEmptyAO(ArrO);
+	ADVKATA();
+	Neff(*ArrO) = ConvertCharInt(CKata);
+
+	
+	for (i = 1; i <= Neff(*ArrO); i++){
+		/** DISHKEY **/
+		ADVKATA();
+		ElmtA(*ArrO, i).DishKey = CKata.TabKata[1];
+
+		/** TABLEINDEX **/
+		ADVKATA();
+		ElmtA(*ArrO, i).TableIndex = ConvertCharInt(CKata);
+	}
+
+	/**** PLAYER ****/
+		/** NAME **/
+		ADVKATA();
+		(*P).Name = (char*) malloc ((CKata.Length + 1) *sizeof(char));
+		for (i = 1; i <= CKata.Length; i++){
+			(*P).Name[i] = CKata.TabKata[i];
+		}
+
+		/** MONEY **/
+		ADVKATA();
+		(*P).Money = ConvertCharInt(CKata);
+
+		/** LIFE **/
+		ADVKATA();
+		(*P).Life = ConvertCharInt(CKata);
+
+		/** TIME **/
+		ADVKATA();
+		(*P).Room = ConvertCharInt(CKata);
+
+		/** POINT **/
+			/* ABSIS */
+			ADVKATA();
+			Absis((*P).Position) = ConvertCharInt(CKata);
+
+			/* Ordinat */
+			ADVKATA();
+			Ordinat((*P).Position) = ConvertCharInt(CKata);
+
+	/**** TRAY ****/
+	CreateEmptyStack(Hand);
+		/** TOP **/
+		ADVKATA();
+		Top(*Hand) = ConvertCharInt(CKata);
+
+		/** ITEM **/
+		for (i = 1; i <= MaxStack; i++){
+			ADVKATA();
+			if (CKata.TabKata[1] != 'x'){
+				(*Hand).T[i] = CKata.TabKata[1];
+			}
+		}
+
+	/**** HAND ****/
+		/** TOP **/
+		ADVKATA();
+		Top(*Tray) = ConvertCharInt(CKata);
+
+		/** ITEM **/
+		i = 1;
+		for(i = 1; i <= MaxStack; i++){
+			ADVKATA();
+			if (CKata.TabKata[1] != 'x'){
+				(*Tray).T[i] = CKata.TabKata[1];
+			}
+		}
 }
 /******** WRITE DATA TO FILE ********/
 /******** ********/
