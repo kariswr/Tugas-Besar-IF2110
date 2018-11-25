@@ -114,6 +114,21 @@ typedef struct {
 	int Neff;
 } ArrTable;
 
+/*---------- ARRAY COUNTER ----------*/
+typedef struct {
+	/* Position 	: koordinat counter
+	** Code		 	: foodcode*/
+	Point Position;
+	char  Code;
+} Counter;
+
+#define NCounter 16
+
+typedef struct { 
+	/* semua berada pada room 0; indeks 1 sampai 16*/
+	Table T[NCounter+1];
+	int Neff;
+} ArrCounter;
 
 /*---------- MATRIKS PETA ----------*/
 typedef char * symbol;
