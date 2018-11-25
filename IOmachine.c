@@ -118,7 +118,16 @@ void WriteThumbFile(ArrThumb ArrTh, char *Name){
 	int i;
 }
 
-/******** READ SAVE_DATA FROM FILE ********/
+/******** PRIMTIVE DATA TYPE CONVERSION ********/
+int ConvertBoolInt(boolean n){
+	if (n == true){
+		return '1';
+	}
+	else{
+		return '0';
+	}
+}
+
 int ConvertCharInt(Kata K){
 	char *c_Temp;
 	int lenTemp;
@@ -134,6 +143,7 @@ boolean ConvertCharBool(Kata K){
 	return (K.TabKata[1] == '1');
 }
 
+/******** READ SAVE_DATA FROM FILE ********/
 void ReadFileExt(Queue *Q, ArrTable *ArrT, ArrOrder *ArrO, Player *P, Stack *Tray, Stack *Hand){
 	STARTKATA('1');
 	/**** QUEUE ****/
@@ -304,28 +314,49 @@ void WriteFileExt(Queue Q, ArrTable ArrT, ArrOrder ArrO, Player P, Stack Tray, S
 	pita_baca = fopen(src_txt, "w");
 	/**** QUEUE ****/
 		/** HEAD **/
-		fprintf(pita_salin, "%d", Head(Q));
+		fprintf(pita_salin, "%d\n", Head(Q));
 		/** TAIL **/
-		fprintf(pita_salin, "%d", Tail(Q));
+		fprintf(pita_salin, "%d\n", Tail(Q));
 		/** MAXEL **/
-		fprintf(pita_salin, "%d", MaxEl(Q));
+		fprintf(pita_salin, "%d\n", MaxEl(Q));
 		
-		int temp;
 		for (i = 1; i <= NBElmtQ(Q); i++){
 			/** STAR **/
-			if (Q.T[i].Star == true){
-				temp = 1;
-			}
-			else{
-				temp = 0;
-			}
-			fprintf(pita_salin, "%d", temp);
+			fprintf(pita_salin, "%d ", ConvertBoolInt(Q.T[i].Star));
 			/** PERSONS **/
-			fprintf(pita_salin, "%d", Q.T[i].Persons);
+			fprintf(pita_salin, "%d ", Q.T[i].Persons);
 			/** PATIENCE **/
-			fprintf(pita_salin, "%d", Q.T[i].Patience);
+			fprintf(pita_salin, "%d\n", Q.T[i].Patience);
 		}
+		fprintf(pita_salin, "\n");
 
+	/**** ARRTABLE ****/
+	fprintf(pita_salin, "%d\n\n", Neff(ArrT));
+		/** TABLE **/
+		for (i = 1; i <= NTable; i++){
+			/* CAPACITY */
+			fprintf(pita_salin, "%d ", ArrT.T[i].Capacity);
+			/* ROOM */
+			fprintf(pita_salin, "%d ", ArrT.T[i].Room);
+			/* POSITION */
+			fprintf(pita_salin, "%d ", Absis(ArrT.T[i].Position));
+			fprintf(pita_salin, "%d ", Ordinat(ArrT.T[i].Position));
+			/* IS OCCUPIED? */
+			fprintf(pita_salin, "%d ", ConvertBoolInt(ArrT.T[i].Occupied));
+			/* CUSTOMER */
+				/** STAR **/
+				fprintf(pita_salin, "%d ", ConvertBoolInt(ArrT.T[i].Cust.Star));
+				/** PERSONS **/
+				fprintf(pita_salin, "%d ", ArrT.T[i].Cust.Persons);
+				/** PATIENCE **/
+				fprintf(pita_salin, "%d\n", ArrT.T[i].Cust.Patience);
+		}
+		fprintf(pita_salin, "\n");
+		
+	/**** ARRORDER ****/
+	fprintf(pita_salin, "%d\n\n", Neff(ArrO));
+
+		/** ORDER **/
 	fclose(pita_baca);
 }
 
