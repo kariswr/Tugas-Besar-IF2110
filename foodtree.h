@@ -12,7 +12,7 @@
 #include "foodconversion.h"
 #include "mesinkar.h"
 
-#define Nil NULL
+#define Nil 0
 
 /*** Konstruktor ***/
 void BuildTree (FoodTree *P);

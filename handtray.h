@@ -9,8 +9,7 @@
 #define handtray_H
 
 #include "library.h"
-
-#define Nil 0
+#include "foodtree.h"
 
 /* Nil adalah stack dengan elemen kosong . */
 /* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
@@ -49,6 +48,11 @@ void PopTray (Stack * S, char * C);
 /* Menghapus C dari Stack S. */
 /* I.S. S  tidak mungkin kosong */
 /* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
+
+char CompareFood (Stack *H, Stack *T, FoodTree F);
+/* membandingkan bahan-bahan dengan resep*/
+/* I.S. H terdefinisi*/
+/* F.S. menghasilkan FoodCode bila sesuai resep, '0' bila tidak berhasil*/
 
 
 #endif

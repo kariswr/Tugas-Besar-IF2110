@@ -9,7 +9,7 @@ void BuildTable (Table * T, int Room, int i, int j, MapMatrix R);
 // "Builds" a table by reading its surroundings at the start of a new game
 
 /* Tests */
-boolean IsUnoccupied (Table T);
+boolean IsOccupied (Table T);
 // Checks if a table is unoccupied
 
 /*---------- ARRAY OF TABLE ----------*/
