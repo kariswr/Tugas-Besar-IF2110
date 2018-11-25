@@ -5,8 +5,8 @@
 
 extern char CC;
 extern boolean EOP;
-extern boolean EndWord;
-extern Word CWord;
+extern boolean EndKata;
+extern Kata CKata;
 
 /******** MESIN KARAKTER ********/
 void START(char n);

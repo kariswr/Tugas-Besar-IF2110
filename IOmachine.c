@@ -46,11 +46,11 @@ void STARTKATA(char n){
 	IgnoreBlank();
 
 	if (CC != MARK){
-		EndWord = false;
+		EndKata = false;
 		SalinKata();
 	}
 	else{
-		EndWord = true;
+		EndKata = true;
 	}
 }
 
@@ -69,7 +69,7 @@ void SalinKata(){
 	int i = 1;
 	do{
 		if (i <= NMax){
-			CWord.TabKata[i] = CC;
+			CKata.TabKata[i] = CC;
 			i = i + 1;
 		}
 		ADV();
@@ -85,7 +85,7 @@ void ReadThumbFile(ArrThumb *ArrTh){
 
 	STARTKATA('0');
 
-	count = (char*) malloc ((CWord.Length + 1) *sizeof(char));
+	count = (char*) malloc ((CKata.Length + 1) *sizeof(char));
 	count[1] = CWord.TabWord[1];
 	int_count = atoi(&(count[1]));
 
