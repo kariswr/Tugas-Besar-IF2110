@@ -19,6 +19,11 @@ void InitiateAT (MapMatrix R1, MapMatrix R2, MapMatrix R3, ArrTable * AT);
 void ReadRoom (int Room, MapMatrix R, ArrTable * AT);
 // Reads a room's matrix to find and build tables at the start of a game
 
+void ReadCounter (MapMatrix R, ArrCounter *AC, Point *PTray);
+/* untuk membuat tabel counter dari matriks peta*/
+/* I.S. R terdefinisi*/
+/* F.S. AC terisi , PTray (posisi tray) terisi*/
+
 /* Add array element */
 void AddTableX (ArrTable * AT, int X, Table T);
 // Adds a table to the array at index X
