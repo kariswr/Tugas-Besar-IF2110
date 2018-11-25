@@ -86,7 +86,7 @@ void ReadThumbFile(ArrThumb *ArrTh){
 	STARTKATA('0');
 
 	count = (char*) malloc ((CKata.Length + 1) *sizeof(char));
-	count[1] = CWord.TabWord[1];
+	count[1] = CKata.TabKata[1];
 	int_count = atoi(&(count[1]));
 
 	(*ArrTh).Length = int_count;
@@ -99,7 +99,7 @@ void ReadThumbFile(ArrThumb *ArrTh){
 			/** Write to the screen **/
 
 			for (j = 1; j <= int_count; j++){
-				for (int i = 1; i <= CWord.Length; i++){
+				for (int i = 1; i <= CKata.Length; i++){
 					/** Save the thumbnails to the array **/
 					(*ArrTh).UserThumb[j].TabKata[i] = CKata.TabKata[i];
 

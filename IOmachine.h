@@ -51,10 +51,10 @@ void SalinKata();
 			Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
 /******** READ THUMBNAIL DATA ********/
-void ReadThumbFile(Word *TableSaveData);
+void ReadThumbFile(Kata *TableSaveData);
 
 /******** WRITE THUMBNAIL DATA********/
-void WriteThumbFile(Word TableSaveData);
+void WriteThumbFile(Kata TableSaveData);
 
 /******** READ SAVE_DATA FROM FILE ********/
 void ReadFileExt(Queue *Q, ArrTable *ArrT, ArrOrder *ArrO, Player *P, Stack *Tray, Stack *Hand);
