@@ -47,7 +47,31 @@ void ReadRoom (int Room, MapMatrix R, ArrTable * AT) {
             }
         }
     }
-};
+}
+
+void ReadCounter (MapMatrix R, ArrCounter *AC, Point *PTray) {
+/* untuk membuat tabel counter dari matriks peta*/
+/* I.S. R terdefinisi*/
+/* F.S. AC terisi , PTray (posisi tray) terisi*/
+	int x;
+	x=1;
+	
+	for (int i = 1; i <= NBrsEff(R); i++) {
+		for (int j = 1; j <= NKolEff(R); j++) {
+			if ((R.T[i][j][0] == 'a' ) || (R.T[i][j][0] == 'b' ) || (R.T[i][j][0] == 'c' ) || (R.T[i][j][0] == 'd' ) || (R.T[i][j][0] == 'e' ) || (R.T[i][j][0] == 'f' ) ||
+			  (R.T[i][j][0] == 'l' ) || (R.T[i][j][0] == 'k' ) || (R.T[i][j][0] == 'j' ) || (R.T[i][j][0] == 'i' ) || (R.T[i][j][0] == 'h' ) || (R.T[i][j][0] == 'g' ) ||
+			  (R.T[i][j][0] == 'm' ) || (R.T[i][j][0] == 'n' ) || (R.T[i][j][0] == 'o' ) || (R.T[i][j][0] == 'v' )){
+				Absis(ElmtA(*AC,x).Position) = j;
+				Ordinat(ElmtA(*AC,x).Position) = i;
+				ElmtA(*AC,x).Code = R.T[i][j][0];
+				x++;
+			} else if (R.T[i][j][0] == 'T'){
+				Absis(*PTray) = j;
+				Ordinat(*PTray) = i;
+			}
+		}
+	}
+}
 
 void InitiateAT (MapMatrix R1, MapMatrix R2, MapMatrix R3, ArrTable * AT) {
     Neff(*AT) = 0;
