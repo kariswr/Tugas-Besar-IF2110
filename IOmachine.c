@@ -10,11 +10,10 @@ static FILE *pita_baca;
 static FILE *pita_salin;
 static int retval;
 
+extern char CC;
+extern boolean EOP;
 boolean EndKata;
 Kata CKata;
-
-char CC;
-boolean EOP;
 
 /******** MESIN KARAKTER ********/
 void START(char n){
@@ -300,8 +299,32 @@ void WriteFileExt(Queue Q, ArrTable ArrT, ArrOrder ArrO, Player P, Stack Tray, S
 	strcat(src_txt, &n);
 	strcat(src_txt, ".txt");
 
+	int i;
 	/**** CONNECTING FILE EXT ****/
 	pita_baca = fopen(src_txt, "w");
+	/**** QUEUE ****/
+		/** HEAD **/
+		fprintf(pita_salin, "%d", Head(Q));
+		/** TAIL **/
+		fprintf(pita_salin, "%d", Tail(Q));
+		/** MAXEL **/
+		fprintf(pita_salin, "%d", MaxEl(Q));
+		
+		int temp;
+		for (i = 1; i <= NBElmtQ(Q); i++){
+			/** STAR **/
+			if (Q.T[i].Star == true){
+				temp = 1;
+			}
+			else{
+				temp = 0;
+			}
+			fprintf(pita_salin, "%d", temp);
+			/** PERSONS **/
+			fprintf(pita_salin, "%d", Q.T[i].Persons);
+			/** PATIENCE **/
+			fprintf(pita_salin, "%d", Q.T[i].Patience);
+		}
 
 	fclose(pita_baca);
 }
