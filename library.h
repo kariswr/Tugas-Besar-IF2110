@@ -187,7 +187,7 @@ typedef struct {
 } ArrFood;
 
 /*---------- ARRAY ORDER ----------*/
-#define MaxOrder 8
+#define MaxOrder 5
 
 typedef struct {
 	/* DishKey		: kata kunci makanan
