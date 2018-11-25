@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "IOmachine.h"
 #include "library.h"
+#include "IOmachine.h"
 #include "waitingcust.h"
 #include "handtray.h"
 
-static FILE *pita;
+static FILE *pita_baca;
+static FILE *pita_salin;
 static int retval;
 
 boolean EndKata;
@@ -22,15 +23,15 @@ void START(char n){
 	strcat(src_txt, &n);
 	strcat(src_txt, ".txt");
 
-	pita = fopen(src_txt, "r");
+	pita_baca = fopen(src_txt, "r");
 	ADV();
 }
 
 void ADV(){
-	retval = fscanf(pita, "%c", &CC);
+	retval = fscanf(pita_baca, "%c", &CC);
 	EOP = (CC == MARK);
 	if (EOP){
-		fclose(pita);
+		fclose(pita_baca);
 	}
 }
 
@@ -118,7 +119,7 @@ void WriteThumbFile(ArrThumb ArrTh, char *Name){
 	int i;
 }
 
-/******** READ DATA FROM FILE ********/
+/******** READ SAVE_DATA FROM FILE ********/
 int ConvertCharInt(Kata K){
 	char *c_Temp;
 	int lenTemp;
@@ -291,8 +292,131 @@ void ReadFileExt(Queue *Q, ArrTable *ArrT, ArrOrder *ArrO, Player *P, Stack *Tra
 			}
 		}
 }
-/******** WRITE DATA TO FILE ********/
-/******** ********/
+/******** WRITE SAVE_DATA TO FILE ********/
+void WriteFileExt(Queue Q, ArrTable ArrT, ArrOrder ArrO, Player P, Stack Tray, Stack Hand, char n){
+	/**** PREPARATION FOR CONNECTING FILE EXT ****/
+	char src_txt[15] = "";
+	strcat(src_txt, "savedata_");
+	strcat(src_txt, &n);
+	strcat(src_txt, ".txt");
+
+	/**** CONNECTING FILE EXT ****/
+	pita_baca = fopen(src_txt, "w");
+
+	fclose(pita_baca);
+}
+
+/******** READ MAP MATRIX ********/
+void AssignMap_FileExt(MapMatrix *R, char CC){
+	int i, j;
+	for (i = 1; i <= M; i++){
+		for (j = 1; j <= N; j++){
+			IgnoreBlank();
+			if (CC == '-'){
+				(*R).T[i][j] = "--";
+			}
+			else if (CC == 'X'){
+				(*R).T[i][j] = "XX";
+			}
+			else if (CC == 'D'){
+				(*R).T[i][j] = "DD";
+			}
+			else if (CC == 'T'){
+				(*R).T[i][j] = "TT";
+			}
+			else if (CC == '1'){
+				(*R).T[i][j] = "01";
+			}
+			else if (CC == '2'){
+				(*R).T[i][j] = "02";
+			}
+			else if (CC == '3'){
+				(*R).T[i][j] = "03";
+			}
+			else if (CC == '4'){
+				(*R).T[i][j] = "04";
+			}
+			else if (CC == '5'){
+				(*R).T[i][j] = "05";
+			}
+			else if (CC == '6'){
+				(*R).T[i][j] = "06";
+			}
+			else if (CC == '7'){
+				(*R).T[i][j] = "07";
+			}
+			else if (CC == '8'){
+				(*R).T[i][j] = "08";
+			}
+			else if (CC == '9'){
+				(*R).T[i][j] = "09";
+			}
+			else if (CC == 'x'){
+				(*R).T[i][j] = "10";
+			}
+			else if (CC == 'y'){
+				(*R).T[i][j] = "11";
+			}
+			else if (CC == 'z'){
+				(*R).T[i][j] = "12";
+			}
+			else if (CC == 'a'){
+				(*R).T[i][j] = "aa";
+			}
+			else if (CC == 'b'){
+				(*R).T[i][j] = "bb";
+			}
+			else if (CC == 'c'){
+				(*R).T[i][j] = "cc";
+			}
+			else if (CC == 'd'){
+				(*R).T[i][j] = "dd";
+			}
+			else if (CC == 'e'){
+				(*R).T[i][j] = "ee";
+			}
+			else if (CC == 'f'){
+				(*R).T[i][j] = "f";
+			}
+			else if (CC == 'g'){
+				(*R).T[i][j] = "gg";
+			}
+			else if (CC == 'h'){
+				(*R).T[i][j] = "hh";
+			}
+			else if (CC == 'j'){
+				(*R).T[i][j] = "jj";
+			}
+			else if (CC == 'k'){
+				(*R).T[i][j] = "kk";
+			}
+			else if (CC == 'l'){
+				(*R).T[i][j] = "ll";
+			}
+			else if (CC == 'm'){
+				(*R).T[i][j] = "mm";
+			}
+			else if (CC == 'n'){
+				(*R).T[i][j] = "nn";
+			}
+			else if (CC == 'o'){
+				(*R).T[i][j] = "oo";
+			}
+		}
+	}
+}
+
+void ReadMap_FileExt(MapMatrix *R1, MapMatrix *R2, MapMatrix *R3, MapMatrix *RK){
+	pita_baca = fopen("externalMap.txt", "r");
+	/**** FOR ROOM 01 ****/
+	AssignMap_FileExt(R1, CC);
+	/**** FOR ROOM 02 ****/
+	AssignMap_FileExt(R2, CC);
+	/**** FOR ROOM 03 ****/
+	AssignMap_FileExt(R3, CC);
+	/**** FOR ROOM KITCHEN ****/
+	AssignMap_FileExt(RK, CC);
+}
 /******** ********/
 /******** ********/
 /******** ********/

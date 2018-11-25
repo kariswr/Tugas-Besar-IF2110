@@ -1,5 +1,5 @@
-#ifndef IO_MACHINE_H
-#define IO_MACHINE_H
+#ifndef __IO_MACHINE_H
+#define __IO_MACHINE_H
 
 #include "library.h"
 
@@ -60,8 +60,11 @@ void WriteThumbFile(Kata TableSaveData);
 void ReadFileExt(Queue *Q, ArrTable *ArrT, ArrOrder *ArrO, Player *P, Stack *Tray, Stack *Hand);
 
 /******** WRITE SAVE_DATA TO FILE ********/
-void WriteFileExt(Queue Q, ArrTable ArrT, ArrOrder ArrO, Player P, Stack Tray, Stack Hand);
+void WriteFileExt(Queue Q, ArrTable ArrT, ArrOrder ArrO, Player P, Stack Tray, Stack Hand, char n);
 
-/******** ********/
-/******** ********/
+/******** READ MAP MATRIX ********/
+void AssignMap_FileExt(MapMatrix *R);
+
+void ReadMap_FileExt(MapMatrix *R1, MapMatrix *R2, MapMatrix *R3, MapMatrix *RK);
+
 #endif
