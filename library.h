@@ -126,7 +126,7 @@ typedef struct {
 
 typedef struct { 
 	/* semua berada pada room 0; indeks 1 sampai 16*/
-	Table T[NCounter+1];
+	Counter T[NCounter+1];
 	int Neff;
 } ArrCounter;
 
