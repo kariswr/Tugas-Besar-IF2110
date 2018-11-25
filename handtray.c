@@ -6,8 +6,9 @@
 /* Implementasi dalam bahasa C dengan alokasi statik */
 
 #include "handtray.h"
+#include "foodtree.h"
+#include <stdio.h>
 
-#define Nil 0
 
 /* Nil adalah stack dengan elemen kosong . */
 /* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
@@ -20,10 +21,6 @@ typedef int address;   /* indeks tabel */
 /* Jika S adalah Stack maka akses elemen : */
    /* S.T[(S.TOP)] untuk mengakses elemen TOP */
    /* S.TOP adalah alamat elemen TOP */
-
-/* Definisi akses dengan Selektor : Set dan Get */
-#define Top(S) (S).TOP
-#define InfoTop(S) (S).T[(S).TOP]
 
 
 /* ************ Prototype ************ */
@@ -73,4 +70,87 @@ void PopTray (Stack * S, char * C){
 (*S).TOP -=1;
 }
 
-
+char CompareFood (Stack *H, Stack *T, FoodTree F){
+/* membandingkan bahan-bahan dengan resep*/
+/* I.S. H terdefinisi*/
+/* F.S. menghasilkan FoodCode bila sesuai resep, '0' bila tidak berhasil*/
+	/*Kamus lokal*/
+	Stack temp;
+	char C,X;
+	boolean accept;
+	addressNode P;
+	
+	/*Algoritma*/
+	CreateEmptyStack(&temp);
+	while (Top(*H) != Nil){
+		PopTray(H,&C);
+		Push(&temp,C);
+	}
+	accept = true;
+	PopTray(&temp,&C);
+	Push(H,C);
+	if (C != Akar(F)){
+		accept=false;
+	}
+	P=F;
+	while (Top(temp)!=Nil && accept){
+		PopTray(&temp,&C);
+		Push(H,C);
+		if(IsBiner(P)){
+			if (C == Akar(Right(P))){
+				P=Right(P);
+			}else if (C == Akar(Left(P))){
+				P=Left(P);
+			}else{
+				accept=false;
+			}
+		}else if (IsUnerLeft(P)){
+			if (C==Akar(Left(P))){
+				P=Left(P);
+			}else{
+				accept=false;
+			}
+		}else if (IsUnerRight(P)){
+			if (C==Akar(Right(P))){
+				P=Right(P);
+			}else{
+				accept=false;
+			}
+		}else if (IsTreeOneElmt(P)){
+			accept=false;
+		}
+	}
+	if (accept){
+		if (IsUnerLeft(P)){
+			P=Left(P);
+			if(IsTreeOneElmt(P)){
+				X=Akar(P);
+			}else{
+				accept=false;
+			}
+		}else{
+			accept=false;
+		}
+	}
+	if(accept){
+		if (!IsStackFull(*T)){
+			Push(T,X);
+			while (Top(*H) != Nil){
+				PopTray(H,&C);
+			}
+			return X;
+		}else{
+			while (!IsStackEmpty(temp)){
+				PopTray(&temp,&C);
+				Push(H,C);
+			}
+			return '0';
+		}
+	}else{
+		while (!IsStackEmpty(temp)){
+			PopTray(&temp,&C);
+			Push(H,C);
+		}
+		return '0';
+	}
+}
