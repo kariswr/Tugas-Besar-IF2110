@@ -6,6 +6,9 @@
 static FILE *pita;
 static int retval;
 
+boolean EndWord;
+Word CWord;
+
 char CC;
 boolean EOP;
 
@@ -40,21 +43,21 @@ void STARTKATA(char n){
 	IgnoreBlank();
 
 	if (CC != MARK){
-		EndKata = false;
+		EndWord = false;
 		SalinKata();
 	}
 	else{
-		EndKata = true;
+		EndWord = true;
 	}
 }
 
 void ADVKATA(){
 	IgnoreBlank();
 	if (CC == MARK){
-		EndKata = true;
+		EndWord = true;
 	}
 	else{
-		EndKata = false;
+		EndWord = false;
 		SalinKata();
 	}
 }
@@ -63,17 +66,83 @@ void SalinKata(){
 	int i = 1;
 	do{
 		if (i <= NMax){
-			CKata.TabKata[i] = CC;
+			CWord.TabWord[i] = CC;
 			i = i + 1;
 		}
 		ADV();
 	} while (!(CC == MARK || CC == BLANK || CC == ENTER));
 	i = i - 1;
-	CKata.Length = i;
+	CWord.Length = i;
 }
 
-/******** ********/
-/******** ********/
+/******** READ THUMBNAIL DATA ********/
+void ReadThumbFile(ArrThumb *ArrTh){
+	char *count;
+	int int_count, j;
+
+	STARTKATA('0');
+
+	count = (char*) malloc ((CWord.Length + 1) *sizeof(char));
+	count[1] = CWord.TabWord[1];
+	int_count = atoi(&(count[1]));
+
+	(*ArrTh).Length = int_count;
+	if (int_count == 0){
+		printf("no savedata found");
+	}
+	else{
+		while (!EOP){
+			ADVKATA();
+			/** Write to the screen **/
+
+			for (j = 1; j <= int_count; j++){
+				for (int i = 1; i <= CWord.Length; i++){
+					/** Save the thumbnails to the array **/
+					(*ArrTh).UserThumb[j].TabWord[i] = CWord.TabWord[i];
+
+					printf("%d. %c", j, CWord.TabWord[i]);
+				}
+				/** Save the length of the username **/
+				(*ArrTh).UserThumb[j].Length = CWord.Length;
+				printf("\n");
+			}
+		}
+	}
+}
+
+/******** WRITE THUMBNAIL DATA********/
+void WriteThumbFile(ArrThumb ArrTh, char *Name){
+	int i;
+
+
+	
+
+}
+
+/******** READ DATA FROM FILE ********/
+int ConvertCharInt(Word W){
+	char *c_Temp;
+	int lenTemp;
+
+	lenTemp = W.Length;
+	c_Temp = (char *) malloc ((lenTemp + 1) *sizeof(char));
+	c_Temp = W.TabWord;
+
+	return atoi(&c_Temp[1]);
+}
+
+void ReadFileExt(Queue *Q, ArrTable *ArrT, ArrOrder *ArrO, Player *P, Stack *Tray, Stack *Hand){
+	STARTKATA('1');
+	/**** QUEUE ****/
+	Head(*Q) = ConvertCharInt(CWord);
+	ADVKATA();
+	Tail(*Q) = ConvertCharInt(CWord);
+	ADVKATA();
+	MaxEl(*Q) = ConvertCharInt(CWord);
+	/**** ARRTABLE ****/
+
+}
+/******** WRITE DATA TO FILE ********/
 /******** ********/
 /******** ********/
 /******** ********/

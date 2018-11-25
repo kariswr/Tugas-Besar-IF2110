@@ -1,4 +1,4 @@
-#ifndef _LIBRARY_H
+	#ifndef _LIBRARY_H
 #define _LIBRARY_H
 
 /*
@@ -234,11 +234,17 @@ typedef struct {
 #define NMax 50
 #define BLANK ' '
 #define ENTER '\n'
+#define MaxUser 9
 
 typedef struct {
-	char TabKata[NMax + 1];
+	char TabWord[NMax + 1];
 	int Length;
-} Kata;
+} Word;
+
+typedef struct {
+	Word UserThumb[MaxUser + 1];
+	int Length;
+} ArrThumb
 
 /*---------- SELEKTOR UNTUK ADT ----------*/
 #define Absis(Point)   (Point).j

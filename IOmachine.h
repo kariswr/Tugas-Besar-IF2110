@@ -5,8 +5,8 @@
 
 extern char CC;
 extern boolean EOP;
-extern boolean EndKata;
-extern Kata CKata;
+extern boolean EndWord;
+extern Word CWord;
 
 /******** MESIN KARAKTER ********/
 void START(char n);
@@ -26,7 +26,7 @@ void ADV();
 
 /******** MESIN KATA ********/
 void IgnoreBlank();
-/* 	I.S :	CC Sembarang
+/*	I.S :	CC Sembarang
 	F.S :	Skip BLANK atau ' ' */
 
 void STARTKATA(char n);
@@ -50,4 +50,18 @@ void SalinKata();
 			CC adalah karakter sesudah karakter terakhir yang diakuisisi.
 			Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
+/******** READ THUMBNAIL DATA ********/
+void ReadThumbFile(Word *TableSaveData);
+
+/******** WRITE THUMBNAIL DATA********/
+void WriteThumbFile(Word TableSaveData);
+
+/******** READ SAVE_DATA FROM FILE ********/
+void ReadFileExt(Queue *Q, ArrTable *ArrT, ArrOrder *ArrO, Player *P, Stack *Tray, Stack *Hand);
+
+/******** WRITE SAVE_DATA TO FILE ********/
+void WriteFileExt(Queue Q, ArrTable ArrT, ArrOrder ArrO, Player P, Stack Tray, Stack Hand);
+
+/******** ********/
+/******** ********/
 #endif

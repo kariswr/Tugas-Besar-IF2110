@@ -1,7 +1,6 @@
-Queue
-<MaxEl>
 <Head>
 <Tail>
+<MaxEl>
 <cust_q(1)>
 <cust_q(2)>
 .
