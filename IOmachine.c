@@ -357,6 +357,43 @@ void WriteFileExt(Queue Q, ArrTable ArrT, ArrOrder ArrO, Player P, Stack Tray, S
 	fprintf(pita_salin, "%d\n\n", Neff(ArrO));
 
 		/** ORDER **/
+		for (i = 1; i <= Neff(ArrO); i++){
+			fprintf(pita_salin, "%c ", ArrO.T[i].DishKey);
+			fprintf(pita_salin, "%d\n", ArrO.T[i].TableIndex);
+		}
+		fprintf(pita_salin, "\n");
+
+	/**** STATUS PLAYER ****/
+		/** NAME **/
+		fprintf(pita_salin, "%s ", P.Name);
+		/** MONEY **/
+		fprintf(pita_salin, "%d ", P.Money);
+		/** LIFE **/
+		fprintf(pita_salin, "%d ", P.Life);
+		/** TIME **/
+		fprintf(pita_salin, "%d ", P.Room);
+		/** POSITION **/
+		fprintf(pita_salin, "%d ", Absis(P.Position));
+		fprintf(pita_salin, "%d\n\n", Ordinat(P.Position));
+
+	/**** TRAY ****/
+		/** TOP **/
+		fprintf(pita_salin, "%d\n", Top(Tray));
+		/** TABLE **/
+		for (i = 1; i <= Top(Tray); i++){
+			fprintf(pita_salin, "%c\n", Tray.T[i]);
+		}
+		fprintf(pita_salin, "\n");
+
+	/**** HAND ****/
+		/** TOP **/
+		fprintf(pita_salin, "%d\n", Top(Hand));
+		/** TABLE **/
+		for (i = 1; i <= Top(Hand); i++){
+			fprintf(pita_salin, "%c\n", Hand.T[i]);
+		}
+		fprintf(pita_salin, "/");
+	
 	fclose(pita_baca);
 }
 
