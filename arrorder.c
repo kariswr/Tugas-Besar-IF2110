@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include "arrorder.h"
 
+#define gotoxy(x,y) printf("\033[%d;%dH", (x), (y))
+#define cls() printf("\033[H\033[J")
+
 /*---------- ORDER ----------*/
 /* Constructor */
 void NewOrder (Order * O, int Idx) {
@@ -81,7 +84,6 @@ void DelXAO (ArrOrder * AO, int X, Order * O) {
 
 /* Print array of order */
 void PrintAO (ArrOrder AO) {
-    printf("ORDER\n");
     if (IsAOEmpty(AO)) {
         //printf("Empty array\n");
     } else {
@@ -93,10 +95,11 @@ void PrintAO (ArrOrder AO) {
                 case 's': printf("Nasi Ayam Goreng"); break;
                 case 't': printf("Burger"); break;
                 case 'u': printf("Hot Dog"); break;
-                case 'v': printf("Spaghetti Bolognese"); break;
+                case 'x': printf("Spaghetti Bolognese"); break;
                 case 'w': printf("Spaghetti Carbonara"); break;
             }
-            printf(", %d\n", ElmtA(AO, i).TableIndex);
+            printf(", %d", ElmtA(AO, i).TableIndex);
+            gotoxy(16+i,3);
         }
     }
 };

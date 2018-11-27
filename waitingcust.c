@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define gotoxy(x,y) printf("\033[%d;%dH", (x), (y))
+#define cls() printf("\033[H\033[J")
+
 /*---------- CUSTOMER ----------*/
 
 /* Constructor */
@@ -183,7 +186,6 @@ void UpdateQueue (Queue * Q, int * leavingCusts) {
 
 /* Print queue */
 void PrintQueue (Queue Q) {
-    printf("WAITING LINE\n");
     if (IsQEmpty(Q)) {
         //printf("Empty queue\n");
     } else {
@@ -196,7 +198,7 @@ void PrintQueue (Queue Q) {
                 }
             }
             printf(" "); PrintPatience(Q.T[i]);
-            printf("\n");
+            gotoxy(6+i,3);
         }
     }
 };

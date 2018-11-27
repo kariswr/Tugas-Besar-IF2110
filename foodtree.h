@@ -50,7 +50,7 @@ boolean IsBiner (FoodTree P);
 adalah pohon biner: mempunyai subpohon kiri dan
 subpohon kanan */
 
-void PrintTree(FoodTree P, ArrFood F, int h);
+void PrintTree(FoodTree P, ArrFood F, int h, int x);
 /* I.S. P terdefinisi, h adalah jarak indentasi (spasi) */
 /* F.S. Semua simpul P sudah ditulis dengan indentasi (spasi) */
 /* Penulisan akar selalu pada baris baru (diakhiri newline) */

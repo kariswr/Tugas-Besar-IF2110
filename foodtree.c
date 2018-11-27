@@ -116,7 +116,7 @@ if (!IsTreeEmpty(P) && !IsTreeOneElmt(P)){
 }
 
 
-void PrintTree(FoodTree P, ArrFood F, int h){
+void PrintTree(FoodTree P, ArrFood F, int h, int x){
 /* I.S. P dan F terdefinisi, h adalah jarak indentasi (spasi) DIISI 5 !!! */
 /* F.S. Semua simpul P sudah ditulis dengan indentasi (spasi) */
 /* Penulisan akar selalu pada baris baru (diakhiri newline) */
@@ -142,40 +142,64 @@ A
 			printf("(%c) ", Akar(P));
 			i=SearchFoodName(F,Akar(P));
 			PrintFoodName(F,F.T[i].FoodCode);
+			/*gotoxy(x+1,y);
+			x=x+1;*/
 			printf("\n");
 		} else 
 		if (IsUnerLeft(P)){
 			printf("(%c) ", Akar(P));
 			i=SearchFoodName(F,Akar(P));
 			PrintFoodName(F,F.T[i].FoodCode);
+			/*gotoxy(x+1,y);
+			x=x+1;*/
 			printf("\n");
-			for (i=1; i<=h; i++) {
-				printf(" ");
+			for (i=1; i<=h+x; i++) {
+				if (i==21){
+					printf("|");
+				}else {
+					printf(" ");
+				}
 			}
-			PrintTree(Left(P),F,h+5);	
+			PrintTree(Left(P),F,h+5,x);	
 		} else 
 		if (IsUnerRight(P)){
 			printf("(%c) ", Akar(P));
 			i=SearchFoodName(F,Akar(P));
 			PrintFoodName(F,F.T[i].FoodCode);
+			/*gotoxy(x+1,y);
+			x=x+1;*/
 			printf("\n");
-			for (i=1; i <=h; i++) {
-				printf(" ");
+			for (i=1; i <=h+x; i++) {
+				if (i==21){
+					printf("|");
+				}else {
+					printf(" ");
+				}
 			}
-			PrintTree(Right(P),F, h+5);
+			PrintTree(Right(P),F, h+5,x);
 		} else {
 			printf("(%c) ", Akar(P));
 			i=SearchFoodName(F,Akar(P));
 			PrintFoodName(F,F.T[i].FoodCode);
+			/*gotoxy(x+1,y);
+			x=x+1;*/
 			printf("\n");
-                for (i = 1; i<=h; i++){
-                    printf(" ");
+            for (i = 1; i<=h+x; i++){
+                    if (i==21){
+						printf("|");
+					}else {
+						printf(" ");
+					}
                 }
-                PrintTree(Left(P),F,h+5);
-                for (i = 1; i<=h; i++){
-                    printf(" ");
+                PrintTree(Left(P),F,h+5,x);
+                for (i = 1; i<=h+x; i++){
+                    if (i==21){
+						printf("|");
+					}else {
+						printf(" ");
+					}
                 }
-                PrintTree(Right(P),F,h+5);
+                PrintTree(Right(P),F,h+5,x);
 		}
 	}
 }
