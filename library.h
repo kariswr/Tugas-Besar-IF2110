@@ -43,12 +43,22 @@ typedef struct tNode {
 } Node;
 typedef address BinTree;
 -------MESIN KARAKTER-------
-#define MARK '.'
-// State Mesin 
+typedef struct {
+	char TabKata[NMax + 1];
+	int Length;
+} Kata;
+#define MARK '/'
+#define NMax 50
+#define BLANK ' '
+#define ENTER '\n'
+
 extern char CC;
 extern boolean EOP;
+
+extern boolean EndKata;
+extern Kata CKata;
+
 JAM?
-MESIN KATA?
 MULTILIST?
 GRAPH?
 */
@@ -131,14 +141,13 @@ typedef struct {
 } ArrCounter;
 
 /*---------- MATRIKS PETA ----------*/
-typedef char * symbol;
 
 #define M 8
 #define N 8
 
 typedef struct { 
 		/* Akses array 1..8 */
-	symbol T[M+1][N+1];
+	char T[M+1][N+1][3];
 	int NBrsEff;
 	int NKolEff;
 } MapMatrix;
@@ -234,24 +243,22 @@ typedef struct {
 	Point Position;
 } Player;
 
-/*-------MESIN KARAKTER-------*/
-/*Silakan modifikasi procedure START pada ADT mesinkar bergantung pada nama file txt*/
-/*Contoh: procedure STARTTREE untuk membaca file foodtree*/
-
-#define MARK '.'
-/* State Mesin */
-extern char CC;
-extern boolean EOP;
-
-/*--------MESIN KATA---------*/
+/*-------IO MACHINE-------*/
+#define MARK '/'
 #define NMax 50
 #define BLANK ' '
+#define ENTER '\n'
+#define MaxUser 9
 
 typedef struct {
-	/* container penyimpan kata, indeks yang dipakai [1..NMax] */
-	char TabKata[NMax+1];
-    int Length;
+	char TabKata[NMax + 1];
+	int Length;
 } Kata;
+
+typedef struct {
+	Kata UserThumb[MaxUser + 1];
+	int Length;
+} ArrThumb;
 
 /*---------- SELEKTOR UNTUK ADT ----------*/
 #define Absis(Point)   (Point).j
